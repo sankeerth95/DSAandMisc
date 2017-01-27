@@ -1,0 +1,84 @@
+template <class Type>
+class Heap{
+
+	private:
+		int length, last, *keys;
+		Type* data;
+		void replace(int index);
+		
+		int parent(int index);
+		int leftDec(int index);
+		int rightDec(int index);
+
+	public:
+		Heap(int maxElements);
+	
+		void insert(Type dat, int key);
+		Type findMin();
+		void remove(Type dat);
+		
+		void changeKey(Type dat, int newKey);		
+};
+
+template <class Type>
+Heap<Type>::Heap(int maxLength){
+
+	keys = new int[maxLength];
+	data = new Type[maxLength];
+}
+
+template <class Type>
+void Heap<Type>::changeKey(Type dat, int newKey){
+
+}
+
+template <class Type>
+Type Heap<Type>::findMin(){
+
+	return data[0];
+}
+
+template <class Type>
+void Heap<Type>::insert(Type dat, int key){
+	
+	keys[last] = key;
+	int up = last;
+	while (up > 0) {
+		if(key < parent[up]) replace(up);
+		else break;
+		up = parent[up];
+	}
+
+	last++;
+}
+
+template <class Type>
+void Heap<Type>::remove(Type dat){
+	
+}
+
+template <class Type>
+void Heap<Type>::replace(int key){
+
+
+}
+
+template <class Type>
+int Heap<Type>::parent(int index){
+
+	if (index != 0) return (index-1)/2;
+	else return 0;
+}
+
+template <class Type>
+int Heap<Type>::leftDec(int index){
+
+	return (2*index+1);
+}
+
+template <class Type>
+int Heap<Type>::rightDec(int index){
+	
+	return 2*(index+1);
+}
+

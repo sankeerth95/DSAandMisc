@@ -1,0 +1,321 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Programming Assignment 1: Polygon Overlapping
+\end_layout
+
+\begin_layout Author
+Sankeerth Durvasula
+\begin_inset Newline newline
+\end_inset
+
+EE13B102
+\end_layout
+
+\begin_layout Section
+Breifing
+\end_layout
+
+\begin_layout Standard
+Two types of verteices have been defined as structs: struct point, and struct
+ pair.
+ The difference is that the coordinates in point are taken in as integer:
+ int x, y, whereas in pair, they're taken in as floating point numbers.
+ Since polygon vertices are integer, it would be a great improvement computation
+ally and algorithmically if we stick to point type structutes.
+ So pair is used only in very particular instances.
+ The struct polygon has also been defined, which is simply a vector of points.
+\end_layout
+
+\begin_layout Standard
+The main routines of the program include the findOverlapPoly(polygon A,
+ polygon B), which is supposed to return true or false if the polygons correspon
+dingly inersect or not, and isBadPoly(int* inputArr, int length), which
+ takes in numbered array obrained from input file, along with it's length.
+\end_layout
+
+\begin_layout Standard
+Dijkstra's algorithm has been used to calculate all pairs shortest paths
+ from the initial polygon.
+\end_layout
+
+\begin_layout Section
+Algorithm
+\end_layout
+
+\begin_layout Standard
+The main function takes in and parses the input line by line.
+ After taking in the first entry, it loops over each line and stores the
+ coordinates in each line in an array, which is then passed to isBadPoly.
+ If it returns true, loop breaks and it prints out 
+\begin_inset Quotes eld
+\end_inset
+
+BAD x
+\begin_inset Quotes erd
+\end_inset
+
+,x being number of the line and then it exits the program using return 0.
+\end_layout
+
+\begin_layout Standard
+If none of the polygons are bad, a 2D array named distance[n][n] is defined,
+ n is the number of polygons.
+ Running a loop between every pair of polygons, one can find all values
+ of distance matrix.
+ Note that distance[i][j] = -1 is designated as infinite distance.
+\end_layout
+
+\begin_layout Standard
+In the usual way, Dijkstra's algorithm is implemented on this array and
+ the minimum distances have been stored in a minDist[n] array,with minDist[0]
+ = 0.
+ While using Dijkstra's algorithm, a boolen visited[n] array is used.
+ So, after Dijkstra is completed, a loop runs to check whether all visited[n]
+ gives true.
+ If not, 
+\begin_inset Quotes eld
+\end_inset
+
+DISCONNECTED x
+\begin_inset Quotes erd
+\end_inset
+
+ is printed, where x is such that visited[x] == 0.
+ Then, it exits the program.
+\end_layout
+
+\begin_layout Standard
+If the execution came until this stage, 
+\begin_inset Quotes eld
+\end_inset
+
+CONNECTED
+\begin_inset Quotes erd
+\end_inset
+
+ is printed out, and row by row, the values of minDist[1], minDist[2], ...
+ minDist[n] are printed out and return 0 then returns from main function.
+\end_layout
+
+\begin_layout Section
+Function to find whether polygons intersect
+\end_layout
+
+\begin_layout Standard
+In the function findOverlapPoly(polygon A, polygon B), the main idea is
+ that two overlapping polygons satisfy atleast one of these three properties:
+\end_layout
+
+\begin_layout Standard
+1.
+ A is inside B
+\end_layout
+
+\begin_layout Standard
+2.
+ B is inside A
+\end_layout
+
+\begin_layout Standard
+3.
+ A has an 
+\begin_inset Quotes eld
+\end_inset
+
+incoming edge
+\begin_inset Quotes erd
+\end_inset
+
+(defined below)
+\end_layout
+
+\begin_layout Standard
+The two polygon vertices are given in anticlockwise direction.
+ Exploiting this fact, one can assign a direction to each of the edges of
+ the polygon.
+\end_layout
+
+\begin_layout Standard
+Call the first edge of polygon A to cross the boundary of polygon B the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+incoming edge
+\begin_inset Quotes erd
+\end_inset
+
+ of polygon B.
+ As i turns out, detecting this incoming edge can be done in an elegant
+ fashion, as shown in the code.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename incomingEdge.png
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename incomingEdge2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Scan each all pairs of line segments of B while traversing A in the anticlockwis
+e direction.
+ At everypair, the following cases might arise:
+\end_layout
+
+\begin_layout Standard
+1.
+ The line segments do not intersect: In this case, continue the search.
+\end_layout
+
+\begin_layout Standard
+2.
+ The line segments intersect with point of intersection not being on the
+ end points: return TRUE
+\end_layout
+
+\begin_layout Standard
+3.
+ The line segments are parallel/coincident: Continue the search.
+\end_layout
+
+\begin_layout Standard
+4.
+ The line segments intersect at one of the end points: There will be multiple
+ cases to take care of to check that the segment from polygon A is indeed
+ going inside B.
+ If so, return true.
+\end_layout
+
+\begin_layout Standard
+5.
+ After this scan, check if any single point in A is inside B.
+ if yes, return true.
+\end_layout
+
+\begin_layout Standard
+6.
+ Do the same for som point B in A.
+ If yes, return true.
+\end_layout
+
+\begin_layout Standard
+7.
+ return false(after all above tests/conditions fail).
+\end_layout
+
+\begin_layout Section
+isInside function
+\end_layout
+
+\begin_layout Standard
+isInside function takes in a pair and polygon as input, and returns true
+ if the pair is strictly inside the polygon, else false.
+ This is done by drawing a horizonral line from (-1, y) to (x, y) where
+ x and y are coordinates of the pair.
+ Now count the number of intersections strictly inbetween these two points
+ with all the sides of the polygon.
+ (Of course there will be some degenerate cases, which have been taken care
+ of in the program, such as the pair shouldn't be on any one of the edges,
+ or the horizontal line passes through the vertex).
+ If this number turns out to be odd, then the point is inside, otherwise
+ it's outside.
+\end_layout
+
+\begin_layout Section
+Result
+\end_layout
+
+\begin_layout Standard
+Since integer values only have been used to detect incoming edges, and no
+ floating point inequality/equality conditions have been imposed, the algorithm
+ is quite robust in figuring out if the polynomials are indeed robust.
+\end_layout
+
+\end_body
+\end_document

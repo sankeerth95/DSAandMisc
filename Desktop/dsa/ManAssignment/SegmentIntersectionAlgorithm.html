@@ -1,0 +1,82 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"></head><body background="SegmentIntersectionAlgorithm_files/cotton_paper.gif">
+<center><h1>General Line Segment Intersection Algorithm</h1></center>
+
+<h3>Background Information</h3>
+The Bentley-Ottmann General Line Segment Intersection Algorithm takes 
+O(nlogn + klogn) time to report all k pairwise intersections in a set of
+n line segments in two-dimensions.  In addition, it uses O(n+k) space.  
+This is a marked improvement over the brute force method which takes 
+O(n^2) time. <br>
+
+<br>
+The algorithm makes use of two main data structures.  They are as follows: <br>
+<ul>
+<li>
+<b>sweep schedule Q</b>: This is a priority queue of sweep events where the key of the priority queue is the x-coordinate of the points.  The possible
+event points are the left and right endpoints of lines and the intersection points between lines.
+</li>
+<br>
+<br>
+<li>
+<b>sweep status D</b>: This is a balanced search tree that maintains the linear ordering of line segments that are intersecting the sweep line.
+</li>
+</ul>
+<br>
+<h2> The Bentley-Ottmann Line Segment Intersection Algorithm </h2>
+Q := the 2n segment end-points<br>
+D := {}<br>
+<b><u>while</u></b> Q &lt;&gt; {} <b><u>do begin</u></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p := DELETEMIN(Q);<br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u>if</u></b> p is the left end-point of si <b><u>then begin</u></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A := ABOVE(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B := BELOW(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT (in 
+Q) A intersect si and B intersect si if they exist and are to the right 
+of p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u>end</u></b><br>
+
+<br> 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u>if</u></b> p is the right end-point of si <b><u>then begin</u></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A := ABOVE(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B := BELOW(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT (in 
+Q) A intersect B if it exists and if it is to the right of p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u>end</u></b><br>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u>if</u></b> p := si intersect sj <b><u>then begin</u></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{suppose si := ABOVE(sj)}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTERCHANGE(si,sj,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A := ABOVE(sj,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B := BELOW(si,D);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT (in 
+Q) A intersect sj and B intersect si if they exist and are to the right 
+of p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REPORT(p);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><u>end</u></b><br>
+
+<br> 
+
+<b><u>end</u></b>
+
+<br>
+<br>
+<br>
+
+<h3>References</h3>
+Andranik Mirzaian   - Computational Geometry (CSE 6114) Class Notes on Intersections<br>
+Mark de Berg et al. - "Computational Geometry - Algorithms and Applications", Springer-Verlag, 2000.<br>
+Bentley, Ottmann    - "Algorithms for reporting and counting geometric intersections", IEEE Trans. Comput., 1979<br>
+
+<center><hr><a href="http://www.cs.yorku.ca/%7Eaaw/TristanCarvelho/SegmentIntersection.htm">Back to the General Line Segment Intersection Applet</a><br></center>
+
+
+</body></html>

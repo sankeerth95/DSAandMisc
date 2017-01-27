@@ -1,0 +1,31 @@
+#include "Graph.hpp"
+
+using namespace std;
+
+int main(){
+
+	Graph g(10); //= new Graph(10);
+	
+	g.insertBiEdge(0, 1);
+	g.insertBiEdge(1, 2);
+	g.insertBiEdge(2, 0);
+	g.insertBiEdge(0, 3);
+	g.insertBiEdge(3, 4);
+	g.insertBiEdge(4, 5);
+	g.insertBiEdge(3, 7);
+	g.insertBiEdge(4, 6);
+	g.insertBiEdge(5, 6);
+	g.insertBiEdge(5, 8);
+	g.insertBiEdge(5, 7);
+	g.insertBiEdge(7, 8);
+	g.insertBiEdge(8, 9);
+	
+	//g.dfs(8);
+	//g.displayPre();
+	//g.displayPost();
+
+	g.bfs(0);
+	g.displayLevels();
+
+	return 0;
+}

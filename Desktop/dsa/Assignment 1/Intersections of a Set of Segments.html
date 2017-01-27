@@ -1,0 +1,857 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<title>Intersections of a Set of Segments</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Expires" content="No">
+<meta name="Generator" content="NetObjects Fusion 11 for Windows">
+<meta name="Keywords" content="2d triangle,
+3d area,
+3d polygon,
+3d triangle,
+line intersecting plane,
+area of 3d triangle,
+area of triangle in 3d,
+c++ point,
+closest point of approach,
+computer graphics books,
+convex hull,
+convex hull algorithm,
+distance between lines,
+distance from origin to plane,
+distance from plane,
+distance from plane to point,
+distance from point,
+distance from point to line,
+distance from point to line 3d,
+distance from point to plane,
+distance of point from line,
+distance to line,
+distance to plane,
+geometric algorithms,
+geometry algorithms,
+intersecting planes,
+intersecting triangles,
+intersection between line and plane,
+intersection lines,
+intersection of 2 planes,
+intersection of 3 planes,
+intersection of line and plane,
+intersection of lines,
+intersection of plane and line,
+intersection of planes,
+line intersecting plane,
+line plane intersection,
+line triangle intersection,
+linear algebra summary,
+lines and planes,
+moller trumbore,
+plane distance,
+plane intersection,
+plane line intersection,
+plane plane intersection,
+point c++,
+point in polygon,
+point in polygon algorithm,
+point inside polygon,
+point inside polyhedron,
+point plane distance,
+ray intersection,
+ray plane intersection,
+ray plane intersection c++,
+ray tracing triangle intersection,
+ray triangle intersection,
+triangle 3d,
+triangle intersection,
+triangle plane,
+triangle ray intersection,
+triangle triangle intersection,
+two planes intersect,
+winding number,
+winding number algorithm,
+2D,
+3D,
+algorithm,
+algorithmic,
+area,
+area of polygon,
+area of quadrilateral,
+area of triangle,
+bounding ball,
+bounding box,
+bounding container,
+bounding cuboid,
+bounding ellipse,
+bounding rectangle,
+C++ code,
+clockwise,
+combinatorial,
+computation,
+computational,
+computational geometry,
+computer aided design,
+computer games,
+computer graphics,
+computer science,
+convex hull,
+counterclockwise,
+cross product,
+crossing number,
+cuboid,
+distance,
+dot product,
+exterior product,
+geometric,
+geometric model,
+geometry,
+geometry software,
+graphics software,
+inner product,
+intersection,
+line,
+linear algebra,
+math,
+mathematical,
+mathematics,
+minimal cuboid,
+minimal ellipse,
+minimal rectangle,
+orientation,
+outer product,
+perp operator,
+perp product,
+perpendicular,
+plane,
+point,
+point in polygon,
+point inclusion,
+polygon,
+polyhedron,
+polyline,
+polytope,
+ray,
+rectangle,
+segment,
+software,
+tangent,
+tetrahedron,
+textbook,
+triangle,
+vector,
+vector geometry,
+vector product,
+volume,
+volume of tetrahedron">
+<meta name="Language" content="English">
+<meta name="Rating" content="SAFE FOR KIDS">
+<meta name="Public" content="All">
+<meta name="Robots" content="ALL">
+<meta name="Author" content="Dan Sunday">
+<meta name="contact_addr" content="Maryland, USA">
+<meta name="Date" content="2012">
+<meta name="Copyright" content="2001 softSurfer, 2012 Dan Sunday">
+<meta name="Distribution" content="GLOBAL">
+<meta name="Description" content="Computational geometry algorithms for software programming including C++ code, basic lmath, a book store, and related web site links.">
+<script src="Intersections%20of%20a%20Set%20of%20Segments_files/ca-pub-1703170776573172.js"></script><script type="text/javascript">
+<!--
+function F_loadRollover(){} function F_roll(){}
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/rollover.js">
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/jquery.js">
+</script>
+<link rel="stylesheet" type="text/css" href="Intersections%20of%20a%20Set%20of%20Segments_files/fusion.css">
+<link rel="stylesheet" type="text/css" href="Intersections%20of%20a%20Set%20of%20Segments_files/style.css">
+<link rel="stylesheet" type="text/css" href="Intersections%20of%20a%20Set%20of%20Segments_files/site.css">
+<style type="text/css" title="NOF_STYLE_SHEET">
+<!--
+
+div#NavigationBar1_1LYR { 
+position:absolute; visibility:hidden; top:0; left:0; z-index:1001;
+}
+div#NavigationBar1_2LYR { 
+position:absolute; visibility:hidden; top:0; left:0; z-index:1002;
+}
+div#NavigationBar1_3LYR { 
+position:absolute; visibility:hidden; top:0; left:0; z-index:1003;
+}
+div#NavigationBar1_4LYR { 
+position:absolute; visibility:hidden; top:0; left:0; z-index:1004;
+}
+div#NavigationBar1_5LYR { 
+position:absolute; visibility:hidden; top:0; left:0; z-index:1005;
+}
+div#NavigationBar1_6LYR { 
+position:absolute; visibility:hidden; top:0; left:0; z-index:1006;
+}
+-->
+</style>
+
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/a09-_intersect-3_nof.js">
+</script>
+</head>
+<body style="font-family: 'Times New Roman', Times, Serif; font-size: 14px; color: rgb(0,0,0); margin: 0px;">
+  <table width="1267" border="0" cellpadding="0" cellspacing="0">
+    <tbody><tr valign="top" align="left">
+      <td>
+        <table width="118" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr valign="top" align="left">
+            <td height="75" width="14"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="14" border="0"></td>
+            <td width="97"><img id="Picture5" src="Intersections%20of%20a%20Set%20of%20Segments_files/Logo_iSurf_org.gif" alt="Logo_iSurf_org" title="Logo_iSurf_org" height="75" width="97" border="0"></td>
+            <td width="7"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="7" border="0"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="3" height="28"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="3" id="Text1897" class="TextObject" style="background-color: rgb(255,255,0);" height="132" width="118">
+              <p style="text-align: center; margin-bottom: 0px;"><a href="http://geomalgorithms.com/subscribe.html"><b><span style="color: rgb(128,0,0);">Subscribe<br>to eAlerts</span><br></b><span style="font-size: 12pt;">for Geom Site<br>Updates<br><b><br>CLICK HERE</b></span></a><b><span style="font-size: 12pt;"></span></b></p>
+            </td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="3" height="21"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="3" id="Text1900" class="TextObject" height="92" width="118">
+              <p style="margin-bottom: 0px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1703170776573172";
+/* Narrow Margin Links */
+google_ad_slot = "7348008313";
+google_ad_width = 120;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="120"></iframe></ins></ins>&nbsp;</p>
+            </td>
+          </tr>
+        </tbody></table>
+      </td>
+      <td>
+        <table width="835" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr valign="top" align="left">
+            <td colspan="7" height="45"></td>
+            <td colspan="6" width="560"><img id="Banner2" src="Intersections%20of%20a%20Set%20of%20Segments_files/Intersections-of-a-Set-of-SegmNnBanner.gif" alt="Intersections of a Set of Segments" title="Intersections of a Set of Segments" height="45" width="560" border="0"></td>
+            <td colspan="4"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td height="5" width="11"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="11" border="0"></td>
+            <td width="1"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="1" border="0"></td>
+            <td width="6"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="6" border="0"></td>
+            <td width="19"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="19" border="0"></td>
+            <td width="1"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="1" border="0"></td>
+            <td width="2"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="2" border="0"></td>
+            <td width="83"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="83" border="0"></td>
+            <td width="96"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="96" border="0"></td>
+            <td width="85"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="85" border="0"></td>
+            <td width="198"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="198" border="0"></td>
+            <td width="26"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="26" border="0"></td>
+            <td width="76"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="76" border="0"></td>
+            <td width="79"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="79" border="0"></td>
+            <td width="93"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="93" border="0"></td>
+            <td width="3"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="3" border="0"></td>
+            <td width="19"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="19" border="0"></td>
+            <td width="37"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="37" border="0"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="9"></td>
+            <td id="Text1885" class="TextObject" style="text-align: center;" width="198">
+              <p style="margin-bottom: 0px;">by Dan Sunday</p>
+            </td>
+            <td colspan="7"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="3"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td height="26"></td>
+            <td colspan="15" width="787">
+              <table id="NavigationBar1" style="font-size: 72px; text-align: center;" width="787" border="0" cellpadding="0" cellspacing="1">
+                <tbody><tr valign="top" align="left">
+                  <td width="130"><a href="http://geomalgorithms.com/index.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton1','',0);F_roll('NavigationButton1',1)" onmouseout="F_roll('NavigationButton1',0)"><img id="NavigationButton1" name="NavigationButton1" src="Intersections%20of%20a%20Set%20of%20Segments_files/Home_Np1_1.gif" onmouseover="F_loadRollover(this,'Home_NRp2_1.gif',0)" alt="Home" title="Home" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a style="display: block;" href="http://geomalgorithms.com/faq.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton2','',0);F_roll('NavigationButton2',1)" onmouseout="F_roll('NavigationButton2',0)"><img id="NavigationButton2" name="NavigationButton2" src="Intersections%20of%20a%20Set%20of%20Segments_files/FAQ_Np1_1.gif" onmouseover="F_loadRollover(this,'FAQ_NRp2_1.gif',new Array('NavigationBar1_1', 'vertical', 'slideBottom', 0, 24))" alt="FAQ" title="FAQ" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/math.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton3','',0);F_roll('NavigationButton3',1)" onmouseout="F_roll('NavigationButton3',0)"><img id="NavigationButton3" name="NavigationButton3" src="Intersections%20of%20a%20Set%20of%20Segments_files/Math_Np1_1.gif" onmouseover="F_loadRollover(this,'Math_NRp2_1.gif',new Array('NavigationBar1_2', 'vertical', 'slideBottom', 0, 24))" alt="Math" title="Math" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/algorithms.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton4','',0);F_roll('NavigationButton4',1)" onmouseout="F_roll('NavigationButton4',0)"><img id="NavigationButton4" name="NavigationButton4" src="Intersections%20of%20a%20Set%20of%20Segments_files/Algorithms_Hp3.gif" onmouseover="F_loadRollover(this,'Algorithms_HRp4.gif',new Array('NavigationBar1_3', 'vertical', 'slideBottom', 0, 24))" alt="Algorithms" title="Algorithms" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/code.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton5','',0);F_roll('NavigationButton5',1)" onmouseout="F_roll('NavigationButton5',0)"><img id="NavigationButton5" name="NavigationButton5" src="Intersections%20of%20a%20Set%20of%20Segments_files/Code_Np1_1.gif" onmouseover="F_loadRollover(this,'Code_NRp2_1.gif',new Array('NavigationBar1_4', 'vertical', 'slideBottom', 0, 24))" alt="Code" title="Code" height="24" width="130" border="0"></a></td>
+                  <td height="24" width="130"><a href="http://geomalgorithms.com/book_store.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton6','',0);F_roll('NavigationButton6',1)" onmouseout="F_roll('NavigationButton6',0)"><img id="NavigationButton6" name="NavigationButton6" src="Intersections%20of%20a%20Set%20of%20Segments_files/Book-Store_Np1_1.gif" onmouseover="F_loadRollover(this,'Book-Store_NRp2_1.gif',new Array('NavigationBar1_5', 'vertical', 'slideBottom', 0, 24))" alt="Book Store" title="Book Store" height="24" width="130" border="0"></a></td>
+                </tr>
+              </tbody></table>
+            </td>
+            <td></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="5"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="4" height="96"></td>
+            <td colspan="10" id="Text1889" class="TextObject" width="739">
+              <p style="margin-bottom: 0px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1703170776573172";
+/* Top Margin Leaderboard */
+google_ad_slot = "2033933112";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/show_ads.js">
+</script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="728"></iframe></ins></ins>&nbsp;</p>
+            </td>
+            <td colspan="3"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="3"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="4" height="23"></td>
+            <td colspan="10" id="Text1895" class="TextObject" width="739">
+              <p style="margin-bottom: 0px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1703170776573172";
+/* Top Margin Thin Banner */
+google_ad_slot = "9901950316";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/show_ads.js">
+</script><ins id="aswift_2_expand" style="display:inline-table;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;" frameborder="0" height="15" width="728"></iframe></ins></ins>&nbsp;</p>
+            </td>
+            <td colspan="3"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="23"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="2"></td>
+            <td colspan="15" id="Text53" class="TextObject" width="823">
+              <p>Sometimes an application needs to find the set of 
+intersection points for a collection of many line segments. Often these 
+applications involve polygons which are just an ordered set of connected
+ segments. Specific problems that might need an algorithmic solution 
+are:</p>
+              <ol>
+                <li>Compute the intersection (or union, or difference) 
+of two simple polygons or planar graphs. To do this, one must determine 
+all intersection points, and use them as new vertices to construct the 
+intersection (or union, or difference).<br>&nbsp;</li>
+                <li>Test if two polygons or planar graphs intersect. One
+ has to determine the intersections of one object's edges with those of 
+the other. As soon as any valid intersection is found, the test can 
+stop, and it doesn't have to determine the complete set of 
+intersections.<br>&nbsp;</li>
+                <li>Test if a polyline or polygon is simple. That is, 
+determine if any two nonsequential edges of a polyline intersect. This 
+is an important property since many algorithms only work for simple 
+polylines or polygons. Again, his test can stop as soon as any 
+intersection is found.<br>&nbsp;</li>
+                <li>Decompose a polygon into simple pieces. To do this, 
+one needs to know the complete set of intersection points between the 
+edges, and use each of them as a cut-point in the decomposition.<br>&nbsp;</li>
+              </ol>
+              <p style="list-style-type: none;">Algorithms solving these
+ problems are used in many application areas such as computer graphics, 
+CAD, circuit design, hidden line elimination, computer vision, and so 
+on.</p>
+              <h2 style="list-style-type: none;"><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;"><a name="Short-Survey"></a><br><span style="font-family: 'Times New Roman', Times, Serif; font-size: 20pt;">A Short Survey of Intersection Algorithms</span></span></h2>
+              <p style="list-style-type: none;">In general, for a set of <i>n</i> line segments, there can be up to <img id="Picture995" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2-.gif" alt="O(n2)" title="O(n2)" height="28" hspace="0" vspace="0" width="50" border="0" align="top"> intersection points, since if every segment intersected every other segment, there would be <img id="Picture998" src="Intersections%20of%20a%20Set%20of%20Segments_files/n-n-1-.gif" alt="n(n-1).div.2=O(n2)" title="n(n-1).div.2=O(n2)" height="28" hspace="0" vspace="0" width="145" border="0" align="top"> intersection points. In the worst case, to compute them all would require a <img id="Picture996" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2-.gif" alt="O(n2)" title="O(n2)" height="28" hspace="0" vspace="0" width="50" border="0" align="top"> algorithm. The "brute force" algorithm would simply consider all <img id="Picture997" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2-.gif" alt="O(n2)" title="O(n2)" height="28" hspace="0" vspace="0" width="50" border="0" align="top">
+ pairs of line segments, test each pair for intersection, and record the
+ ones it finds. This is a lot of computing. However, when there are only
+ a few intersection points, or only one such point needs to be detected 
+(or not), there are faster algorithms.</p>
+              <p style="list-style-type: none;">In fact, these problems 
+can be solved by "output-sensitive" algorithms whose efficiency depends 
+on both the input and the output sizes. Here the input is a set <img id="Picture994" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA.gif" alt="OMEGA" title="OMEGA" height="20" hspace="0" vspace="2" width="20" border="0" align="top"> of <i>n</i> segments, and the output is the set <img id="Picture1007" src="Intersections%20of%20a%20Set%20of%20Segments_files/LAMBDA.gif" alt="LAMBDA" title="LAMBDA" height="20" hspace="0" vspace="0" width="20" border="0" align="top"> of <i>k</i> computed intersections, where <i>k</i> = <i>n</i><sup><span style="font-size: 12pt;">2</span></sup>
+ in the worst case, but is usually much smaller. An early algorithm 
+[Shamos &amp; Hoey, 1976] showed how to detect if at least one 
+intersection exists in <img id="Picture999" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-.gif" alt="O(nlog-n)" title="O(nlog-n)" height="25" hspace="0" vspace="0" width="81" border="0" align="top"> time and <img id="Picture1000" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top"> space by "sweeping" over a linear ordering of <img id="Picture1001" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA.gif" alt="OMEGA" title="OMEGA" height="20" hspace="0" vspace="2" width="20" border="0" align="top">. Extending their idea, [Bentley &amp; Ottmann, 1979] gave an algorithm to compute all <i>k</i> intersections in <img id="Picture1009" src="Intersections%20of%20a%20Set%20of%20Segments_files/O--n-k-log-n-.gif" alt="O((n+k)log-n)" title="O((n+k)log-n)" height="25" hspace="0" vspace="0" width="121" border="0" align="top"> time and <img id="Picture1005" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-k-.gif" alt="O(n+k)" title="O(n+k)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> space. After more than 30 years, the well-known "<b><i>Bentley-Ottmann Algorithm</i></b>"
+ is still the most popular one to implement in practice ([Bartuschka, 
+Mehlhorn &amp; Naher, 1997], [de Berg et al, 2000], [Hobby, 1999], 
+[O'Rourke, 1998], [Preparata &amp; Shamos, 1985]) since it is relatively
+ easy to both understand and implement. However, their algorithm did not
+ achieve the theoretical lower bound; and thus, was only the first of 
+many output-sensitive algorithms for solving the segment intersection 
+problem.</p>
+              <p style="list-style-type: none;">A decade later, [Chazelle &amp; Edelsbrunner, 1988 and 1992] discovered an optimal <img id="Picture1011" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-k-.gif" alt="O(nlog-n+k)" title="O(nlog-n+k)" height="25" hspace="0" vspace="0" width="108" border="0" align="top"> time algorithm. But, their algorithm still needs <img id="Picture1006" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-k-.gif" alt="O(n+k)" title="O(n+k)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> storage space, and it is difficult to implement. Subsequent work made further improvements, and [Balaban, 1995] found an <img id="Picture1012" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-k-.gif" alt="O(nlog-n+k)" title="O(nlog-n+k)" height="25" hspace="0" vspace="0" width="108" border="0" align="top"> time and <img id="Picture1003" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top"> space deterministic algorithm. There have also been a number of "randomized" algorithms with <i>expected</i> <img id="Picture1013" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-k-.gif" alt="O(nlog-n+k)" title="O(nlog-n+k)" height="25" hspace="0" vspace="0" width="108" border="0" align="top"> running time. The earliest of these by [Myers, 1985] uses <img id="Picture1008" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-k-.gif" alt="O(n+k)" title="O(n+k)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> space. However, the later one by [Clarkson &amp; Shor, 1989] uses only <img id="Picture1002" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top"> space.</p>
+              <p style="list-style-type: none;">Additionally, improved 
+algorithms have been found for the more restrictive "red-blue 
+intersection" problem. Here there are two separate sets of segments, the
+ "red" set <img id="Picture1023" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA-1.gif" alt="OMEGA-1" title="OMEGA-1" height="26" hspace="0" vspace="1" width="25" border="0" align="top"> and the "blue" set <img id="Picture1024" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA-2.gif" alt="OMEGA-2" title="OMEGA-2" height="26" hspace="0" vspace="1" width="28" border="0" align="top">.
+ One wants to find intersections between the sets, but not within the 
+same set; that is, red-blue intersections, but not red-red or blue-blue 
+ones. A simple deterministic <img id="Picture1014" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-k-.gif" alt="O(nlog-n+k)" title="O(nlog-n+k)" height="25" hspace="0" vspace="0" width="108" border="0" align="top"> time and <img id="Picture1004" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top">
+ space "trapezoid sweep" algorithm was developed by [Chan, 1994] based 
+on earlier work of [Mairson &amp; Stolfi, 1988]. These algorithms can be
+ used to perform boolean set operations, like intersections or unions, 
+between two different simple polygons or planar subdivision graphs.</p>
+              <p style="list-style-type: none;">Nevertheless, the Shamos-Hoey and Bentley-Ottmann algorithms remain the landmarks of the field. Note, however, that when <i>k</i> is large of order <img id="Picture1019" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2-.gif" alt="O(n2)" title="O(n2)" height="28" hspace="0" vspace="0" width="50" border="0" align="top">, the Bentley-Ottmann algorithm takes <img id="Picture1022" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2log-n-.gif" alt="O(n2log-n)" title="O(n2log-n)" height="28" hspace="0" vspace="0" width="90" border="0" align="top"> time which is worse than the <img id="Picture1020" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2-.gif" alt="O(n2)" title="O(n2)" height="28" hspace="0" vspace="0" width="50" border="0" align="top"> brute-force algorithm! Also, the more complicated optimal algorithms are <img id="Picture1021" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n2-.gif" alt="O(n2)" title="O(n2)" height="28" hspace="0" vspace="0" width="50" border="0" align="top"> which is the same as the simple brute-force one. So, when <i>k</i> is expected to be much larger than <img id="Picture1015" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top">, one might as well use the easy-to-implement brute-force algorithm. But, when <i>k</i> is expected to be less than or equal to <img id="Picture1016" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top">, Bentley-Ottmann is the simplest expected <img id="Picture1018" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-.gif" alt="O(nlog-n)" title="O(nlog-n)" height="25" hspace="0" vspace="0" width="81" border="0" align="top"> time and <img id="Picture1017" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top"> space algorithm.</p>
+              <h2 style="list-style-type: none;"><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;"><a name="Bentley-Ottmann-Algorithm"></a><br><span style="font-family: 'Times New Roman', Times, Serif; font-size: 20pt;">The Bentley-Ottmann Algorithm</span></span></h2>
+              <p style="list-style-type: none; text-align: left;">The input for the Bentley-Ottmann algorithm is a collection <img id="Picture1337" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA--Li-.gif" alt="OMEGA={Li}" title="OMEGA={Li}" height="26" hspace="0" vspace="2" width="70" border="0" align="top"> of line segments <b>L</b><i><sub><span style="font-size: 12pt;">i</span></sub></i>, and its output will be a set <img id="Picture1338" src="Intersections%20of%20a%20Set%20of%20Segments_files/LAMBDA--Ij-.gif" alt="LAMBDA={Ij}" title="LAMBDA={Ij}" height="29" hspace="0" vspace="0" width="68" border="0" align="top"> of intersection points. This algorithm is referred to as a "<b><i>sweep line algorithm</i></b>" because it's operation can be visualized as having another line, a "sweep line" <b>SL,</b> sweeping over the collection <img id="Picture1334" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA.gif" alt="OMEGA" title="OMEGA" height="20" hspace="0" vspace="2" width="20" border="0" align="top"> and collecting information as it passes over the individual segments <b>L</b><i><sub><span style="font-size: 12pt;">i</span></sub></i>. The information collected for each position of <b>SL</b> is basically an ordered list of all segments in <img id="Picture1333" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA.gif" alt="OMEGA" title="OMEGA" height="20" hspace="0" vspace="2" width="20" border="0" align="top"> that are currently being intersected by <b>SL</b>.
+ The data structure maintaining this information is often also called 
+the "sweep line". This class structure also detects and outputs 
+intersections as it discovers them. The process by which it discovers 
+intersections is the heart of the algorithm and its efficiency.</p>
+              <p style="list-style-type: none; text-align: left;">To implement the sweep logic, we must first linearly order the segments of <img id="Picture1335" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA.gif" alt="OMEGA" title="OMEGA" height="20" hspace="0" vspace="2" width="20" border="0" align="top"> to determine the sequence in which <b>SL</b> encounters them. That is, we need to order the endpoints <img id="Picture1341" src="Intersections%20of%20a%20Set%20of%20Segments_files/-Ei0-Ei1-i-1-n.gif" alt="{Ei0,Ei1}i=1,n" title="{Ei0,Ei1}i=1,n" height="28" hspace="0" vspace="0" width="96" border="0" align="top"> of all the segments <b>L</b><i><sub><span style="font-size: 12pt;">i</span></sub></i> so we can detect when <b>SL</b> starts and stops intersecting each segment of <img id="Picture1336" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA.gif" alt="OMEGA" title="OMEGA" height="20" hspace="0" vspace="2" width="20" border="0" align="top">. Traditionally, the endpoints are ordered by increasing <i>x</i> first and then increasing <i>y</i>-coordinate values, but any linear order will do (some authors prefer decreasing <i>y</i> first and then increasing <i>x</i>).
+ With the traditional ordering, the sweep line is vertical and moves 
+from left to right as it encounters each segment, as shown in the 
+diagram:</p>
+              <p style="list-style-type: none; text-align: center;"><img id="Picture1359" src="Intersections%20of%20a%20Set%20of%20Segments_files/Pic-sweepline.gif" alt="Pic-sweepline" title="Pic-sweepline" height="383" hspace="0" vspace="0" width="450" border="0" align="top"></p>
+              <p style="list-style-type: none; text-align: left;">At any point in the algorithm, the sweep line<b> SL</b> intersects only those segments with one endpoint to the left of (or on) it and the other endpoint to the right of it. The <b>SL</b>
+ data structure keeps a dynamic list of these segments by: (1) adding a 
+segment when its leftmost endpoint is encountered, and (2) deleting a 
+segment when its rightmost endpoint is encountered. Further, the <b>SL</b>
+ orders the list of segments with an "above-below" relation. So, to add 
+or delete a segment, its position in the list must be determined, which 
+can be done by a worst-case <img id="Picture1027" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-log-n-.gif" alt="O(log-n)" title="O(log-n)" height="25" hspace="0" vspace="0" width="69" border="0" align="top">
+ binary search of the current segments in the list. In addition, besides
+ adding or deleting segments, there is another event that changes the 
+list structure; namely, whenever two segments intersect, then their 
+positions in the ordered list must be swapped. Given the two segments, 
+which must be neighbors in the list, this swap is an <img id="Picture1028" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-log-n-.gif" alt="O(log-n)" title="O(log-n)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> operation.</p>
+              <p style="list-style-type: none; text-align: left;">To organize all this, the algorithm maintains an ordered "<b><i>event queue</i></b>" <b>EQ</b> whose elements cause a change in the <b>SL</b> segment list. Initially, <b>EQ</b>
+ is set to the sweep-ordered list of all segment endpoints. But as 
+intersections between segments are found, then they are also added to <b>EQ</b>
+ in the same sweep-order as used for the endpoints One must test, 
+though, to avoid inserting duplicate intersections onto the event queue.
+ The example in the above diagram shows how this can happen. At event 2,
+ segments <b>S</b><sub><span style="font-size: 12pt;">1</span></sub> and <b>S</b><sub><span style="font-size: 12pt;">2</span></sub> cause intersection <i><span style="font-size: 16pt;">I</span></i><sub><span style="font-size: 12pt;">12</span></sub> to be computed and put on the queue. Then, at event 3, segment <b>S</b><sub><span style="font-size: 12pt;">3</span></sub> comes between and separates <b>S</b><sub><span style="font-size: 12pt;">1</span></sub> and <b>S</b><sub><span style="font-size: 12pt;">2</span></sub>. Next, at event 4, <b>S</b><sub><span style="font-size: 12pt;">1</span></sub> and <b>S</b><sub><span style="font-size: 12pt;">3</span></sub> swap places on the sweep line, and <b>S</b><sub><span style="font-size: 12pt;">1</span></sub> is brought next to <b>S</b><sub><span style="font-size: 12pt;">2</span></sub> again causing <i><span style="font-size: 16pt;">I</span></i><sub><span style="font-size: 12pt;">12</span></sub> to be computed again.&nbsp; But, there can only be one event for each intersection, and <i><span style="font-size: 16pt;">I</span></i><sub><span style="font-size: 12pt;">12</span></sub>
+ cannot be put on the queue twice. So, when an intersection is being put
+ on the queue, we must find its potential x-sorted location in the 
+queue, and check that it is not already there. Since there is at most 
+one intersect point for any two segments, labeling an intersection with 
+identifiers for the segments is sufficient to uniquely identify it. As a
+ result of all this, the maximum size of the event queue = <img id="Picture1031" src="Intersections%20of%20a%20Set%20of%20Segments_files/2n-k.gif" alt="2n+k.le.2n+n2" title="2n+k.le.2n+n2" height="24" hspace="0" vspace="0" width="122" border="0" align="top">, and any insertion or deletion can be done with a <img id="Picture1030" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-log-2n-n2--.gif" alt="O(log(2n+n2))" title="O(log(2n+n2))" height="28" hspace="0" vspace="0" width="125" border="0" align="top"> = <img id="Picture1029" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-log-n-.gif" alt="O(log-n)" title="O(log-n)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> binary search.</p>
+              <p style="list-style-type: none; text-align: left;">But, 
+what does all this have to do with efficiently finding the complete set 
+of segment intersections? Well, as segments are sequentially added to 
+the <b>SL</b> segment list, their possible intersections with other 
+eligible segments are determined. When a valid intersection is found, 
+then it is inserted into the event queue. Further, when an 
+intersection-event on <b>EQ</b> is processed during the sweep, then it causes a re-ordering of the <b>SL</b> list, and the intersection is also added to the output list <img id="Picture1346" src="Intersections%20of%20a%20Set%20of%20Segments_files/LAMBDA.gif" alt="LAMBDA" title="LAMBDA" height="20" hspace="0" vspace="0" width="20" border="0" align="top">. In the end, when all events have been processed, <img id="Picture1347" src="Intersections%20of%20a%20Set%20of%20Segments_files/LAMBDA.gif" alt="LAMBDA" title="LAMBDA" height="20" hspace="0" vspace="0" width="20" border="0" align="top"> will contain the complete ordered set of all intersections.</p>
+              <p style="list-style-type: none; text-align: left;">However,
+ there is one critical detail, the heart of the algorithm, that we still
+ need to describe; namely, how does one compute a valid intersection? 
+Clearly, two segments can only intersect if they occur simultaneously on
+ the sweep-line at some time. But this by itself is not enough to make 
+the algorithm efficient. The important observation is that two 
+intersecting segments must be immediate above-below neighbors on the 
+sweep-line. Thus, there are only a few restricted cases for which 
+possible intersections need to be computed:</p>
+              <ol>
+                <li>When a segment is added to the <b>SL</b> list, determine if it intersects with its above and below neighbors.<br>&nbsp;</li>
+                <li>When a segment is deleted from the <b>SL</b> list, 
+its previous above and below neighbors are brought together as new 
+neighbors. So, their possible intersection needs to be determined.<br>&nbsp;</li>
+                <li>At an intersection event, two segments switch positions in the <b>SL</b> list, and their intersection with their new neighbors (one for each) must be determined.</li>
+              </ol>
+              <p style="list-style-type: none; text-align: left;">This means that for the processing of any one event (endpoint or intersection) of <b>EQ</b>, there are at most two intersection determinations that need to be made. </p>
+              <p style="list-style-type: none; text-align: left;">One detail remains, namely the time needed to add, find, swap, and remove segments from the <b>SL</b> structure. To do this, the <b>SL</b>
+ can be implemented as a balanced binary tree (such as an AVL, a 2-3, or
+ a red-black tree) which guarantees that these operations will take at 
+most <img id="Picture1026" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-log-n-.gif" alt="O(log-n)" title="O(log-n)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> time since <i>n</i> is the maximum size of the <b>SL</b> list. Thus, each of the (2<i>n</i>+<i>k</i>) events has at worst <img id="Picture1025" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-log-n-.gif" alt="O(log-n)" title="O(log-n)" height="25" hspace="0" vspace="0" width="69" border="0" align="top"> processing to do. Adding up the initial sort and the event processing, the efficiency of the algorithm is: <img id="Picture1349" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n--O--2n-k-log-n--O--n-k-log-n-.gif" alt="O(nlog-n)+O((2n+k)log-n)=O((n+k)log-n)" title="O(nlog-n)+O((2n+k)log-n)=O((n+k)log-n)" height="25" hspace="0" vspace="0" width="360" border="0" align="top">.</p>
+              <h3 style="list-style-type: none;"><span style="font-size: 16pt;"><a name="Pseudo-Code-BO-Algorithm"></a><br>Pseudo-Code: Bentley-Ottmann Algorithm</span></h3>
+              <p style="list-style-type: none; text-align: left;">Putting
+ all of this together, the top-level logic for an implementation of the 
+Bentley-Ottmann algorithm is given by the following pseudo-code: </p>
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                  <td align="center">
+                    <table width="731" border="0" cellpadding="0" cellspacing="0">
+                      <tbody><tr>
+                        <td class="TextObject">
+                          <p style="list-style-type: none; text-align: left; margin-bottom: 0px;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: 12pt;">&nbsp;&nbsp;&nbsp; Initialize event queue <b>EQ</b> = all segment endpoints;<br>&nbsp;&nbsp;&nbsp; Sort <b>EQ</b> by increasing x and y;<br>&nbsp;&nbsp;&nbsp; Initialize sweep line <b>SL</b> to be empty;<br>&nbsp;&nbsp;&nbsp; Initialize output intersection list <b>IL</b> to be empty;<br><br>&nbsp;&nbsp;&nbsp; While (<b>EQ</b> is nonempty) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let E = the next event from <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (E is a left endpoint) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segE = E's segment;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add segE to <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segA = the segment Above segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segB = the segment Below segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect( segE with segA) exists) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insert I into <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect( segE with segB) exists) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insert I into <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else If (E is a right endpoint) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segE = E's segment;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segA = the segment Above segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segB = the segment Below segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Delete segE from <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect( segA with segB) exists) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I is not in <b>EQ</b> already) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Insert I into <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else {&nbsp; // E is an intersection event<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add E’s intersect point to the output list <b>IL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segE1 above segE2 be E's intersecting segments in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Swap their positions so that segE2 is now above segE1;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segA = the segment above segE2 in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segB = the segment below segE1 in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect(segE2 with segA) exists)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I is not in <b>EQ</b> already) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Insert I into <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect(segE1 with segB) exists)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I is not in <b>EQ</b> already) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ Insert I into <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; remove E from <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return <b>IL</b>;<br>}</span></p>
+                        </td>
+                      </tr>
+                    </tbody></table>
+                  </td>
+                </tr>
+              </tbody></table>
+              <p style="list-style-type: none; text-align: left;"><br>This routine outputs the complete ordered list of all intersection points. </p>
+              <h2 style="list-style-type: none;"><span style="font-size: 20pt;"><a name="Shamos-Hoey-Algorithm"></a><br>The Shamos-Hoey Algorithm</span></h2>
+              <p style="list-style-type: none; text-align: left;">If one
+ only wants to know if an intersection exists, then as soon as any 
+intersection is detected, the routine can terminate immediately. This 
+results in a greatly simplified algorithm. Intersections don't ever have
+ to be put on the event queue, and so its size is only 2<i>n</i> for the
+ endpoints of all the segments. And, code for processing this 
+non-existent event can be removed. Further, the event (priority) queue 
+can be implemented as a simple ordered array since it never changes. 
+Additionally, no output list needs to be built since the algorithm 
+terminates as soon as any intersection is found. Consequently, this 
+algorithm needs only <img id="Picture1032" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-n-.gif" alt="O(n)" title="O(n)" height="25" hspace="0" vspace="0" width="42" border="0" align="top"> space and runs in <img id="Picture1033" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-.gif" alt="O(nlog-n)" title="O(nlog-n)" height="25" hspace="0" vspace="0" width="81" border="0" align="top"> time. This is the original algorithm of [Shamos &amp; Hoey, 1976]. </p>
+              <h3 style="list-style-type: none; text-align: left;"><span style="font-size: 16pt;"><a name="Pseudo-Code-SH-Algorithm"></a><br>Pseudo-Code: Shamos-Hoey Algorithm</span></h3>
+              <p style="list-style-type: none; text-align: left;">The simplified pseudo-code is:</p>
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                  <td align="center">
+                    <table width="639" border="0" cellpadding="0" cellspacing="0">
+                      <tbody><tr>
+                        <td class="TextObject">
+                          <p style="list-style-type: none; text-align: left; margin-bottom: 0px;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: 12pt;">&nbsp;&nbsp;&nbsp; Initialize event queue <b>EQ</b> = all segment endpoints;<br>&nbsp;&nbsp;&nbsp; Sort <b>EQ</b> by increasing x and y;<br>&nbsp;&nbsp;&nbsp; Initialize sweep line <b>SL</b> to be empty;<br><br>&nbsp;&nbsp;&nbsp; While (<b>EQ</b> is nonempty) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let E = the next event from <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (E is a left endpoint) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segE = E's segment;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Add segE to <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segA = the segment Above segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segB = the segment Below segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect( segE with segA) exists) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return TRUE;&nbsp;&nbsp; // an Intersect Exists<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect( segE with segB) exists) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return TRUE;&nbsp;&nbsp; // an Intersect Exists<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else {&nbsp; // E is a right endpoint<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segE = E's segment;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segA = the segment above segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let segB = the segment below segE in <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Delete segE from <b>SL</b>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (I = Intersect( segA with segB) exists) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return TRUE;&nbsp;&nbsp; // an Intersect Exists<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; remove E from <b>EQ</b>;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // No&nbsp; Intersections<br>}</span></p>
+                        </td>
+                      </tr>
+                    </tbody></table>
+                  </td>
+                </tr>
+              </tbody></table>
+              <h2 style="list-style-type: none;"><a name="Applications"></a><br><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;">Applications</span></h2>
+              <h3 style="list-style-type: none;"><a name="Simple-Polygons"></a><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;"><br>Simple Polygons</span></h3>
+              <p style="list-style-type: none; text-align: left;">(A) <b><u>Test if Simple</u></b>.&nbsp; The Shamos-Hoey algorithm can be used to <b><i>test if a polygon is simple or not</i></b>. We give a C++ implementation <a href="#simple_Polygon%28%29">simple_Polygon()</a>
+ for this algorithm below. Note that the shared endpoint between 
+sequential edges does not count as a non-simple intersection point, and 
+the intersection test routine must check for that.</p>
+              <p style="list-style-type: none; text-align: left;">Also, 
+we do not&nbsp; provide the code for a balanced binary tree, which is 
+needed for the&nbsp; sweepline data structure. We did this to 
+concentrate only on the&nbsp; geometric aspect of the algorithm, and not
+ recommend a specific type of&nbsp; balanced tree, such as AVL, or 
+red-black, or 2-3. These can be found in&nbsp; standard libraries. 
+Nevertheless, there have often been requests to&nbsp; include a complete
+ standalone algorithm.</p>
+              <p>Recently, a <a id="Text53Link2" href="http://geomalgorithms.com/a09-_avl_code.html">complete simple_Polygon() algorithm using an AVL tree</a>
+ has been developed by [Glenn Burkhardt, 2014], and provided to us 
+for&nbsp; publication here. He used AVL tree code previously developed 
+by [Brad&nbsp; Appleton, 1997], who gave his permission to republish his
+ code here&nbsp; (including his <a id="Text53Link3" href="http://geomalgorithms.com/_avl_license.html">License agreement</a>).
+ In addition to integrating these two software packages, Glenn also made
+ modifications for greater efficiency, and to make the code 
+compatible&nbsp; with the current C++ standards. He also provided 
+updated code (2015) that improves the segment above-below comparison 
+tests used by the sweepline.</p>
+              <p style="list-style-type: none; text-align: left;">(B) <b><u>Decompose into Simple Pieces</u></b>.&nbsp; The Bentley-Ottmann algorithm can be used to <b><i>decompose a non-simple polygon into simple pieces</i></b>.
+ To do this, all intersection points are needed. One approach for a 
+simple decomposition algorithm is to perform “surgery” at each 
+intersection point. This proceedure can be incorporated into the 
+sweepline algorithm as it discovers new intersection points, resulting 
+in an <img id="Picture1357" src="Intersections%20of%20a%20Set%20of%20Segments_files/O-nlog-n-k-.gif" alt="O(nlog-n+k)" title="O(nlog-n+k)" height="25" hspace="0" vspace="0" width="108" border="0" align="top">
+ decomposition algorithm. To do this, one must also output the edges 
+that persist in a linked list, whose connected sublists will be the new 
+simple polygons.</p>
+              <p style="list-style-type: none; text-align: left;">Let the original polygon be given by the set of segment endpoints <img id="Picture1352" src="Intersections%20of%20a%20Set%20of%20Segments_files/OMEGA--Ei-i-0-n.gif" alt="OMEGA={Ei}i=0,n" title="OMEGA={Ei}i=0,n" height="28" hspace="0" vspace="0" width="96" border="0" align="top">, with <img id="Picture1353" src="Intersections%20of%20a%20Set%20of%20Segments_files/En-E0.gif" alt="En=E0" title="En=E0" height="26" hspace="0" vspace="0" width="62" border="0" align="top">. Its directed edges are given by the vectors <img id="Picture1355" src="Intersections%20of%20a%20Set%20of%20Segments_files/ei-Ei-1-Ei.gif" alt="ei=Ei+1-Ei" title="ei=Ei+1-Ei" height="26" hspace="0" vspace="0" width="98" border="0" align="top">.</p>
+              <ol>
+                <li>Compute all the intersection points of the edge 
+segments using the Bentley-Ottmann algorithm. The following steps may be
+ incorporated into this algorithm whenever the sweepline finds a new 
+intersection. <br>&nbsp;</li>
+                <li>For an intersection point <i><span style="font-size: 16pt;">I</span></i><i><sub><span style="font-size: 12pt;">ij</span></sub></i> between <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">i</span></sub></i> and <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">j</span></sub></i>, (<i>j</i> &gt; <i>i</i>+1 &gt; 0), add 2 new vertices <i><span style="font-size: 16pt;">V</span></i><i><sub><span style="font-size: 12pt;">ij</span></sub></i> and <i><span style="font-size: 16pt;">V</span><sub><span style="font-size: 12pt;">ji</span></sub></i> (one on each edge<b> <span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">i</span></sub></i> and <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">j</span></sub></i>). Split each edge <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">k</span></sub></i> into two new edges <b><span style="font-size: 16pt;">e</span></b><sub><span style="font-size: 12pt;"><i>k</i>,<i>in</i></span></sub> and <b><span style="font-size: 16pt;">e</span></b><sub><span style="font-size: 12pt;"><i>k</i>,<i>out</i></span></sub>&nbsp; joined at the new vertex on <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">k</span></sub></i>. <br><br>Add
+ these new edges to the sweepline list, and also record them as new 
+polygon edges. Also, reassign any other intersections that <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">i</span></sub></i> and <b><span style="font-size: 16pt;">e</span></b><i><sub><span style="font-size: 12pt;">j</span></sub></i> may have had (with other edges) to the new <i>in</i> &amp; <i>out</i>
+ edges. When implemented within the sweepline algorithm, this 
+reassignment is made to the rightmost new edge, and the leftmost new 
+edge gets deleted from the sweepline list.<br>&nbsp;</li>
+                <li>Next, do surgery at these new vertices to remove the crossover. This is done by <br>&nbsp;&nbsp;&nbsp; a) attaching <b><span style="font-size: 16pt;">e</span></b><sub><span style="font-size: 12pt;"><i>i</i>,<i>in</i></span></sub> to <b><span style="font-size: 16pt;">e</span></b><sub><span style="font-size: 12pt;"><i>j</i>,<i>out</i></span></sub> at <i><span style="font-size: 16pt;">V</span></i><i><sub><span style="font-size: 12pt;">ij</span></sub></i>, and<br>&nbsp;&nbsp;&nbsp; b) attaching <b><span style="font-size: 16pt;">e</span></b><sub><span style="font-size: 12pt;"><i>j</i>,<i>in</i></span></sub> to <b><span style="font-size: 16pt;">e</span></b><sub><span style="font-size: 12pt;"><i>i</i>,<i>out</i></span></sub> at <i><span style="font-size: 16pt;">V</span></i><i><sub><span style="font-size: 12pt;">ji</span></sub></i>,<br>as shown in the following diagram.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img id="Picture1360" src="Intersections%20of%20a%20Set%20of%20Segments_files/Pic-simple_surgery.gif" alt="Pic-simple_surgery" title="Pic-simple_surgery" height="186" hspace="0" vspace="0" width="600" border="0" align="top"><br><br></li>
+                <li>After doing this at all intersections, then the 
+remaining connected edge sets are the simple polygons decomposing the 
+original non-simple one.<br>&nbsp;</li>
+              </ol>
+              <p style="list-style-type: none; text-align: left;">Note 
+that the resulting simple polygons may not be disjoint since one could 
+be contained inside another. In fact, the decomposition inclusion 
+hierarchy is based on the inclusion winding number of each simple 
+polygon in the original non-simple one (see Algorithm 3 about <a href="http://geomalgorithms.com/a03-_inclusion.html#Winding-Number">Winding Number Inclusion</a>). For example:</p>
+              <p style="list-style-type: none; text-align: center;"><img id="Picture1361" src="Intersections%20of%20a%20Set%20of%20Segments_files/Pic-simple_decomp.gif" alt="Pic-simple_decomp" title="Pic-simple_decomp" height="270" hspace="0" vspace="0" width="500" border="0" align="top"></p>
+              <p style="list-style-type: none; text-align: left;">&nbsp;</p>
+              <h3 style="list-style-type: none;"><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;"><span style="color: rgb(102,0,102);"><a name="Polygon-Set-Operations"></a>&nbsp;</span><br>Polygon Set Operations</span></h3>
+              <p style="list-style-type: none; text-align: left;">The 
+Bentley-Ottmann algorithm can be used to speed up computing the 
+intersection, union, or difference of two general non-convex simple 
+polygons. Of course, before using any complicated algorithm to perform 
+these operations, one should first test the bounding boxes or spheres of
+ the polygons for overlap (see Algorithm 8 on <a href="http://geomalgorithms.com/a08-_containers.html">Bounding Containers</a>). If the bounding containers are disjoint, then so are the two polygons, and the set operations become trivial.</p>
+              <p style="list-style-type: none; text-align: left;">However,
+ when two polygons overlap, the sweep line strategy of the 
+Bentley-Ottmann algorithm can be adapted to perform a set operation on 
+any two simple polygons. For further details see [O'Rourke, 1998, 
+266-269]. If the two polygons are known to be simple, then one just 
+needs intersections for segments from different polygons, which is a 
+red-blue intersection problem.</p>
+              <h3 style="list-style-type: none;"><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;"><span style="color: rgb(102,0,102);"><a name="Planar-Subdivision"></a>&nbsp;</span><br>Planar Subdivisions</span></h3>
+              <p style="list-style-type: none; text-align: left;">The 
+Bentley-Ottmann algorithm can be used to efficiently compute the overlay
+ of two planar subdivisions. For details, see [de Berg et al, 2000, 
+33-39]. A planar subdivision is a planar graph with straight line 
+segments for edges, and it divides the plane into a finite number of 
+regions. For example, boundary lines divide a country into states. When 
+two such planar graphs are overlaid (or superimposed), then their 
+combined graph defines a subdivision refinement of each one. To compute 
+this refinement, one needs to calculate all intersections between the 
+line segments in both graphs. For a segment in one graph, we only need 
+the intersections with segments in the other graph, and so this is 
+another red-blue intersection problem.</p>
+              <h2 style="list-style-type: none;"><br><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;">Implementations</span></h2>
+              <p style="list-style-type: none;">Here are some sample "C++" implementations of these algorithms.</p>
+              <p style="list-style-type: none;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: small;">// Copyright 2001 softSurfer, 2012 Dan Sunday<br>// This code may be freely used and modified for any purpose<br>// providing that this copyright notice is included with it.<br>// SoftSurfer makes no warranty for this code, and cannot be held<br>// liable for any real or imagined damage resulting from its use.<br>// Users of this code must verify correctness for their application.<br>&nbsp;</span></p>
+              <p style="list-style-type: none;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: small;">// Assume that classes are already given for the objects:<br>//&nbsp;&nbsp;&nbsp; <b>Point</b> with 2D coordinates {float x, y;}<br>//&nbsp;&nbsp;&nbsp; <b>Polygon</b> with n vertices {int n; Point *V;} with V[n]=V[0]<br>//&nbsp;&nbsp;&nbsp; <b>Tnode</b> is a node element structure for a BBT<br>//&nbsp;&nbsp;&nbsp; <b>BBT</b> is a class for a Balanced Binary Tree<br>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; such as an AVL, a 2-3, or a&nbsp; red-black tree<br>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with methods given by the&nbsp; placeholder code:<br><br>typedef struct _BBTnode Tnode;<br>struct _BBTnode {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void* val;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // plus node mgmt info ...<br>};<br><br>class BBT {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tnode&nbsp;&nbsp; *root;<br>public:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ BBT() {root = (Tnode*)0;}&nbsp;&nbsp; // constructor<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ ~BBT() {freetree();}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 
+destructor<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tnode*&nbsp; insert( void* ){};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 
+insert data into the tree<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tnode*&nbsp; find( void* 
+){};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // find data from 
+the tree<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tnode*&nbsp; 
+next( Tnode* ){};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // get next 
+tree node<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tnode*&nbsp; 
+prev( Tnode* ){};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // get 
+previous tree node<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+void&nbsp;&nbsp;&nbsp; remove( Tnode*&nbsp; ){};&nbsp;&nbsp;&nbsp;&nbsp;
+ // remove node from the tree<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ void&nbsp;&nbsp;&nbsp; 
+freetree(){};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // free all tree data structs<br>};<br>// <b>NOTE:</b><br>// Code for these methods must be provided for the algorithm to work.<br>// We have not provided it since binary tree algorithms are well-known<br>// and code is widely available. Further, we want to reduce the clutter<br>// accompanying the essential sweep line algorithm.<br>//===================================================================<br>&nbsp;</span></p>
+              <p style="list-style-type: none;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: small;">#define FALSE&nbsp;&nbsp; 0<br>#define TRUE&nbsp;&nbsp;&nbsp; 1<br>#define LEFT&nbsp;&nbsp;&nbsp; 0<br>#define RIGHT&nbsp;&nbsp; 1<br><br>extern void <br>qsort(void*, unsigned, unsigned, int(*)(const void*,const void*));<br><br>// <b>xyorder()</b>: determines the xy lexicographical order of two points<br>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; returns: (+1) if p1 &gt; p2; (-1) if p1 &lt; p2; and&nbsp; 0 if equal <br>int xyorder( Point* p1, Point* p2 ) <br>{<br>&nbsp;&nbsp;&nbsp; // test the x-coord first<br>&nbsp;&nbsp;&nbsp; if (p1-&gt;x &gt; p2-&gt;x) return 1; <br>&nbsp;&nbsp;&nbsp; if (p1-&gt;x &lt; p2-&gt;x) return (-1);<br>&nbsp;&nbsp;&nbsp; // and test the y-coord second<br>&nbsp;&nbsp;&nbsp; if (p1-&gt;y &gt; p2-&gt;y) return 1; <br>&nbsp;&nbsp;&nbsp; if (p1-&gt;y &lt; p2-&gt;y) return (-1);<br>&nbsp;&nbsp;&nbsp; // when you exclude all other possibilities, what remains&nbsp; is...<br>&nbsp;&nbsp;&nbsp; return 0;&nbsp; // they are the same point <br>}<br><br>// <b>isLeft()</b>: tests if point P2 is Left|On|Right of the line P0 to P1.<br>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; returns: &gt;0 for left, 0 for on, and &lt;0 for&nbsp; right of the line.<br>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (see Algorithm 1 on <a href="http://geomalgorithms.com/a01-_area.html#isLeft%28%29">Area of Triangles</a>)<br>inline float<br>isLeft( Point P0, Point P1, Point P2 )<br>{<br>&nbsp;&nbsp;&nbsp; return (P1.x - P0.x)*(P2.y - P0.y) - (P2.x - P0.x)*(P1.y -&nbsp; P0.y);<br>}<br>//===================================================================<br>&nbsp;</span></p>
+              <p style="list-style-type: none;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: small;"><a name="EventQueue-Class"></a><br>// <b>EventQueue Class<br></b><br>// Event element data struct<br>typedef struct _event Event;<br>struct _event {<br>&nbsp;&nbsp;&nbsp;
+ int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+edge;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // polygon 
+edge i is V[i] to V[i+1]<br>&nbsp;&nbsp;&nbsp; 
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // event 
+type: LEFT or RIGHT vertex<br>&nbsp;&nbsp;&nbsp; Point*&nbsp;&nbsp; eV;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // event vertex<br>};<br><br>int E_compare( const void* v1, const void* v2 ) // qsort compare two events<br>{<br>&nbsp;&nbsp;&nbsp; Event**&nbsp;&nbsp;&nbsp; pe1 = (Event**)v1;<br>&nbsp;&nbsp;&nbsp; Event**&nbsp;&nbsp;&nbsp; pe2 = (Event**)v2;<br><br>&nbsp;&nbsp;&nbsp; return xyorder( (*pe1)-&gt;eV, (*pe2)-&gt;eV );<br>}<br><br>// the EventQueue is a presorted array (no insertions needed)<br>class EventQueue {<br>&nbsp;&nbsp;&nbsp;
+ int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ne;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // total number of events in array<br>&nbsp;&nbsp;&nbsp; 
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ix;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // index of next event on queue<br>&nbsp;&nbsp;&nbsp; 
+Event*&nbsp;&nbsp; 
+Edata;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // array of all events<br>&nbsp;&nbsp;&nbsp; Event**&nbsp; 
+Eq;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // sorted list of event pointers<br>public:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ EventQueue(Polygon P);&nbsp;&nbsp;&nbsp;&nbsp; // constructor<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+~EventQueue(void)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // destructor<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ { delete Eq; delete Edata;}<br><br>&nbsp;&nbsp;&nbsp; 
+Event*&nbsp;&nbsp; 
+next();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // next event on queue<br>};<br><br>// EventQueue Routines<br>EventQueue::EventQueue( Polygon P )<br>{<br>&nbsp;&nbsp;&nbsp; ix = 0;<br>&nbsp;&nbsp;&nbsp; ne = 2 * P.n;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 2 vertex events for each edge<br>&nbsp;&nbsp;&nbsp; Edata = (Event*)new Event[ne];<br>&nbsp;&nbsp;&nbsp; Eq = (Event**)new (Event*)[ne];<br>&nbsp;&nbsp;&nbsp;
+ for (int i=0; i &lt; ne; 
+i++)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // init
+ Eq array pointers<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[i] = &amp;Edata[i];<br><br>&nbsp;&nbsp;&nbsp; // Initialize event queue with edge segment endpoints<br>&nbsp;&nbsp;&nbsp; for (int i=0; i &lt; P.n; i++) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // init data for edge i<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i]-&gt;edge = i;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i+1]-&gt;edge = i;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i]-&gt;eV&nbsp;&nbsp; = &amp;(P.V[i]);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i+1]-&gt;eV = &amp;(P.V[i+1]);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (xyorder( &amp;P.V[i], &amp;P.V[i+1]) &lt; 0)&nbsp; { // determine type<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i]-&gt;type&nbsp;&nbsp;&nbsp; = LEFT;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i+1]-&gt;type = RIGHT;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i]-&gt;type&nbsp;&nbsp;&nbsp; = RIGHT;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eq[2*i+1]-&gt;type = LEFT;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; // Sort Eq[] by increasing x and y<br>&nbsp;&nbsp;&nbsp; qsort( Eq, ne, sizeof(Event*), E_compare );<br>}<br><br>Event* EventQueue::next()<br>{<br>&nbsp;&nbsp;&nbsp; if (ix &gt;= ne)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (Event*)0;<br>&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return Eq[ix++];<br>}<br>//===================================================================<br>&nbsp;</span></p>
+              <p style="list-style-type: none;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: small;"><a name="SweepLine-Class"></a><br>// <b>SweepLine Class<br></b><br>// SweepLine segment data struct<br>typedef struct _SL_segment SLseg;<br>struct _SL_segment {<br>&nbsp;&nbsp;&nbsp;
+ int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+edge;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // polygon 
+edge i is V[i] to V[i+1]<br>&nbsp;&nbsp;&nbsp; Point&nbsp;&nbsp;&nbsp; 
+lP;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+ leftmost vertex point<br>&nbsp;&nbsp;&nbsp; Point&nbsp;&nbsp;&nbsp; 
+rP;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+ rightmost vertex point<br>&nbsp;&nbsp;&nbsp; SLseg*&nbsp;&nbsp; above;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // segment above this one<br>&nbsp;&nbsp;&nbsp; SLseg*&nbsp;&nbsp; below;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // segment below this one<br>};<br><br>// the Sweep Line itself<br>class SweepLine {<br>&nbsp;&nbsp;&nbsp;
+ int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+nv;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+ number of vertices in polygon<br>&nbsp;&nbsp;&nbsp; Polygon* Pn;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // initial Polygon<br>&nbsp;&nbsp;&nbsp;
+ BBT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tree;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // balanced 
+binary tree<br>public:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ SweepLine(Polygon 
+P)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 
+constructor<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ { nv = P.n; Pn = &amp;P; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+~SweepLine(void)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // destructor<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { Tree.freetree();}<br><br>&nbsp;&nbsp;&nbsp; SLseg*&nbsp;&nbsp; add( Event* );<br>&nbsp;&nbsp;&nbsp; SLseg*&nbsp;&nbsp; find( Event* );<br>&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; intersect( SLseg*, SLseg*&nbsp; );<br>&nbsp;&nbsp;&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp; remove( SLseg* );<br>};<br><br>SLseg* SweepLine::add( Event* E )<br>{<br>&nbsp;&nbsp;&nbsp; // fill in SLseg element data<br>&nbsp;&nbsp;&nbsp; SLseg* s = new SLseg;<br>&nbsp;&nbsp;&nbsp; s-&gt;edge&nbsp; = E-&gt;edge;<br><br>&nbsp;&nbsp;&nbsp; // if it is being added, then it must be a LEFT edge event<br>&nbsp;&nbsp;&nbsp; // but need to determine which endpoint is the left one <br>&nbsp;&nbsp;&nbsp; Point* v1 = &amp;(Pn-&gt;V[s-&gt;edge]); <br>&nbsp;&nbsp;&nbsp; Point* v2 = &amp;(Pn-&gt;V[s-&gt;edge+1]); <br>&nbsp;&nbsp;&nbsp; if (xyorder( v1, v2) &lt; 0) { // determine which is leftmost<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;lP = *v1; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;rP = *v2; <br>&nbsp;&nbsp;&nbsp; } <br>&nbsp;&nbsp;&nbsp; else { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;rP = *v1; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;lP = *v2;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; s-&gt;above = (SLseg*)0;<br>&nbsp;&nbsp;&nbsp; s-&gt;below = (SLseg*)0;<br><br>&nbsp;&nbsp;&nbsp; // add a node to the balanced binary tree<br>&nbsp;&nbsp;&nbsp; Tnode* nd = Tree.insert(s);<br>&nbsp;&nbsp;&nbsp; Tnode* nx = Tree.next(nd);<br>&nbsp;&nbsp;&nbsp; Tnode* np = Tree.prev(nd);<br>&nbsp;&nbsp;&nbsp; if (nx != (Tnode*)0) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;above = (SLseg*)nx-&gt;val;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;above-&gt;below = s;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; if (np != (Tnode*)0) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;below = (SLseg*)np-&gt;val;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;below-&gt;above = s;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return s;<br>}<br><br>SLseg* SweepLine::find( Event* E )<br>{<br>&nbsp;&nbsp;&nbsp; // need a segment to find it in the tree<br>&nbsp;&nbsp;&nbsp; SLseg* s = new SLseg;<br>&nbsp;&nbsp;&nbsp; s-&gt;edge&nbsp; = E-&gt;edge;<br>&nbsp;&nbsp;&nbsp; s-&gt;above = (SLseg*)0;<br>&nbsp;&nbsp;&nbsp; s-&gt;below = (SLseg*)0;<br><br>&nbsp;&nbsp;&nbsp; Tnode* nd = Tree.find(s);<br>&nbsp;&nbsp;&nbsp; delete s;<br>&nbsp;&nbsp;&nbsp; if (nd == (Tnode*)0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (SLseg*)0;<br><br>&nbsp;&nbsp;&nbsp; return (SLseg*)nd-&gt;val;<br>}<br><br>void SweepLine::remove( SLseg* s )<br>{<br>&nbsp;&nbsp;&nbsp; // remove the node from the balanced binary tree<br>&nbsp;&nbsp;&nbsp; Tnode* nd = Tree.find(s);<br>&nbsp;&nbsp;&nbsp; if (nd == (Tnode*)0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // not there<br><br>&nbsp;&nbsp;&nbsp; // get the above and below segments pointing to each other<br>&nbsp;&nbsp;&nbsp; Tnode* nx = Tree.next(nd);<br>&nbsp;&nbsp;&nbsp; if (nx != (Tnode*)0) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SLseg* sx = (SLseg*)(nx-&gt;val);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sx-&gt;below = s-&gt;below;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; Tnode* np = Tree.prev(nd);<br>&nbsp;&nbsp;&nbsp; if (np != (Tnode*)0) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SLseg* sp = (SLseg*)(np-&gt;val);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sp-&gt;above = s-&gt;above;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; Tree.remove(nd);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // now&nbsp; can safely remove it<br>&nbsp;&nbsp;&nbsp; delete s;<br>}<br><br>// test intersect of 2 segments and return: 0=none, 1=intersect<br>int SweepLine::intersect( SLseg* s1, SLseg* s2)<br>{<br>&nbsp;&nbsp;&nbsp; if (s1 == (SLseg*)0 || s2 == (SLseg*)0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // no intersect if 
+either segment doesn't exist<br><br>&nbsp;&nbsp;&nbsp; // check for consecutive edges in polygon<br>&nbsp;&nbsp;&nbsp; int e1 = s1-&gt;edge;<br>&nbsp;&nbsp;&nbsp; int e2 = s2-&gt;edge;<br>&nbsp;&nbsp;&nbsp; if (((e1+1)%nv == e2) || (e1 == (e2+1)%nv))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // no non-simple 
+intersect since consecutive<br><br>&nbsp;&nbsp;&nbsp; // test for existence of an intersect point<br>&nbsp;&nbsp;&nbsp; float lsign, rsign;<br>&nbsp;&nbsp;&nbsp; lsign = isLeft(s1-&gt;lP, s1-&gt;rP, s2-&gt;lP);&nbsp;&nbsp;&nbsp; //&nbsp; s2 left point sign<br>&nbsp;&nbsp;&nbsp; rsign = isLeft(s1-&gt;lP, s1-&gt;rP, s2-&gt;rP);&nbsp;&nbsp;&nbsp; //&nbsp; s2 right point sign<br>&nbsp;&nbsp;&nbsp; if (lsign * rsign &gt; 0) // s2 endpoints have same sign&nbsp; relative to s1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =&gt; on same side
+ =&gt; no intersect is possible<br>&nbsp;&nbsp;&nbsp; lsign = isLeft(s2-&gt;lP, s2-&gt;rP, s1-&gt;lP);&nbsp;&nbsp;&nbsp; //&nbsp; s1 left point sign<br>&nbsp;&nbsp;&nbsp; rsign = isLeft(s2-&gt;lP, s2-&gt;rP, s1-&gt;rP);&nbsp;&nbsp;&nbsp; //&nbsp; s1 right point sign<br>&nbsp;&nbsp;&nbsp; if (lsign * rsign &gt; 0) // s1 endpoints have same sign&nbsp; relative to s2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =&gt; on same side
+ =&gt; no intersect is possible<br>&nbsp;&nbsp;&nbsp; // the segments s1 and s2 straddle each other<br>&nbsp;&nbsp;&nbsp; return TRUE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =&gt; an intersect exists<br>}<br>//===================================================================<br>&nbsp;</span></p>
+              <p style="list-style-type: none;"><span style="font-family: 'Courier New', 'Lucida Console', Courier, Monaco, Monospace; font-size: small;"><a name="simple_Polygon()"></a><br>// <b>simple_Polygon()</b>: test if a Polygon is simple or not<br>//&nbsp;&nbsp;&nbsp;&nbsp; Input:&nbsp; Pn = a polygon with n vertices V[]<br>//&nbsp;&nbsp;&nbsp;&nbsp; Return: FALSE(0) = is NOT simple<br>//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TRUE(1)&nbsp; = IS simple<br>int<br>simple_Polygon( Polygon Pn )<br>{<br>&nbsp;&nbsp;&nbsp; <a href="#EventQueue-Class">EventQueue</a>&nbsp; Eq(Pn);<br>&nbsp;&nbsp;&nbsp; <a href="#SweepLine-Class">SweepLine</a>&nbsp;&nbsp; SL(Pn);<br>&nbsp;&nbsp;&nbsp;
+ Event*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+e;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // the current event<br>&nbsp;&nbsp;&nbsp; 
+SLseg*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+s;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // the current SL segment<br><br>&nbsp;&nbsp;&nbsp; // This loop processes all events in the sorted queue<br>&nbsp;&nbsp;&nbsp; // Events are only left or right vertices since<br>&nbsp;&nbsp;&nbsp; // No new events will be added (an intersect =&gt; Done)<br>&nbsp;&nbsp;&nbsp; while (e = Eq.next()) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // while there are events<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (e-&gt;type == LEFT) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // process a left vertex<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ s = SL.add(e);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+ add it to the sweep line<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (SL.intersect(&nbsp; s, s-&gt;above)) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Pn is NOT simple<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (SL.intersect(&nbsp; s, s-&gt;below)) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Pn is NOT simple<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ else 
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // processs a right vertex<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s = SL.find(e);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (SL.intersect(&nbsp; s-&gt;above, s-&gt;below)) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Pn is NOT simple<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+SL.remove(s);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ // remove it from the sweep line<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return TRUE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Pn IS simple<br>}<br>//===================================================================<br>&nbsp;</span></p>
+              <h2 style="list-style-type: none;"><span style="font-family: Arial,Helvetica,Geneva,Sans-serif;">References</span></h2>
+              <p style="list-style-type: none;">Brad Appleton, C++ code for an AVL balanced Tree, see: <a id="Text53Link9" href="http://www.bradapp.com,/">www.bradapp.com,</a> <a id="Text53Link10" href="http://oopweb.com/Algorithms/Documents/AvlTrees/VolumeFrames.html">oopweb.com/Algorithms/Documents/AvlTrees/VolumeFrames.html</a>, <a id="Text53Link11" href="http://www.bradapp.com/ftp/src/libs/C++/AvlTrees.html">www.bradapp.com/ftp/src/libs/C++/AvlTrees.html</a> (1997)</p>
+              <p style="list-style-type: none;">I.J. Balaban, "An 
+Optimal Algorithm&nbsp; for Finding Segment Intersections", Proc. 11-th 
+Ann. ACM Sympos. Comp. Geom., 211-219 (1995)</p>
+              <p style="list-style-type: none;">Ulrike Bartuschka, Kurt 
+Mehlhorn &amp;&nbsp; Stefan Naher, "A Robust and Efficient 
+Implementation of a Sweep Line Algorithm for the Straight Line Segment 
+Intersection Problem", Proc. Workshop on Algor. Engineering, Venice, 
+Italy, 124-135 (1997)</p>
+              <p style="list-style-type: none;">Jon Bentley &amp; Thomas
+ Ottmann,&nbsp; "Algorithms for Reporting and Counting Geometric 
+Intersections", IEEE Trans. Computers C-28, 643-647 (1979)</p>
+              <p style="list-style-type: none;">Mark de Berg et al, <a id="Text53Link12" href="http://www.amazon.com/gp/product/3642096816/ref=as_li_ss_tl?ie=UTF8&amp;tag=geometry_algorithms-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=3642096816"><u>Computational Geometry : Algorithms and Applications</u></a> (2nd Ed), Chapter 2 "Line Segment Intersection" (2010)</p>
+              <p style="list-style-type: none;">Glenn Burkhardt, personal communication (2014, 2015).</p>
+              <p style="list-style-type: none;">Tim Chan, "A Simple 
+Trapezoid Sweep Algorithm for Reporting Red/Blue Segment Intersections",
+ Proc. 6-th Can. Conf.&nbsp; Comp. Geom., Saskatoon, Saskatchewan, 
+Canada, 263-268 (1994)</p>
+              <p style="list-style-type: none;">Bernard Chazelle &amp; 
+Herbert&nbsp; Edelsbrunner, "An Optimal Algorithm for Intersecting Line 
+Segments in the&nbsp; Plane", Proc. 29-th Ann. IEEE Sympos. Found. Comp.
+ Sci., 590-600 (1988)</p>
+              <p style="list-style-type: none;">Bernard Chazelle &amp; Herbert&nbsp; Edelsbrunner, "An Optimal Algorithm for Intersecting Line Segments in the&nbsp; Plane", <u>J. ACM</u> 39, 1-54 (1992)</p>
+              <p style="list-style-type: none;">K.L. Clarkson &amp; P.W.
+ Shor,&nbsp; "Applications of Random Sampling in Computational Geometry,
+ II", Discrete Comp. Geom. 4, 387-421 (1989)</p>
+              <p style="list-style-type: none;">John Hobby, "Practical Segment Intersection with Finite Precision Output", <a id="Text53Link13" href="http://www.elsevier.com/inca/publications/store/5/0/5/6/2/9/">Comp. Geom. : Theory &amp; Applics.</a> 13(4), (1999) [Note: the original Bell Labs paper appeared in 1993]</p>
+              <p style="list-style-type: none;">H.G. Mairson &amp; J. Stolfi, "Reporting&nbsp; and Counting Intersections between Two Sets of Line Segments", in: <u>Theoretic&nbsp; Found. of Comp. Graphics and CAD</u>, NATO ASI Series Vol. F40, 307-326 (1988)</p>
+              <p style="list-style-type: none;">E. Myers, "An O(E log E +
+ I) Expected Time Algorithm for the Planar Segment Intersection 
+Problem", SIAM J. Comput.,&nbsp; 625-636 (1985)</p>
+              <p style="list-style-type: none;">Joseph O'Rourke, <a id="Text53Link14" href="http://www.amazon.com/gp/product/0521649765/ref=as_li_ss_tl?ie=UTF8&amp;tag=geometry_algorithms-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0521649765">Computational Geometry in C (2nd Edition)</a>, Section 7.7 "Intersection of Segments" (1998)</p>
+              <p style="list-style-type: none;">Franco Preparata &amp; Michael Shamos, <a id="Text53Link15" href="http://www.amazon.com/gp/product/0387961313/ref=as_li_ss_tl?ie=UTF8&amp;tag=geometry_algorithms-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0387961313">Computational Geometry: An Introduction</a>, Chapter 7 "Intersections" (1985)</p>
+              <p style="list-style-type: none; margin-bottom: 0px;">Michael Shamos &amp; Dan Hoey, "Geometric&nbsp; Intersection Problems", Proc. 17-th Ann. Conf. Found. Comp. Sci., 208-215 (1976)</p>
+            </td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="25"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="3" height="24"></td>
+            <td colspan="13" width="780">
+              <table id="NavigationBar3" style="text-align: center;" width="780" border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr valign="top" align="left">
+                  <td width="130"><a href="http://geomalgorithms.com/index.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton7','',0);F_roll('NavigationButton7',1)" onmouseout="F_roll('NavigationButton7',0)"><img id="NavigationButton7" name="NavigationButton7" src="Intersections%20of%20a%20Set%20of%20Segments_files/Home_Np1_1.gif" onmouseover="F_loadRollover(this,'Home_NRp2_1.gif',0)" alt="Home" title="Home" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/math.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton8','',0);F_roll('NavigationButton8',1)" onmouseout="F_roll('NavigationButton8',0)"><img id="NavigationButton8" name="NavigationButton8" src="Intersections%20of%20a%20Set%20of%20Segments_files/Math_Np1_1.gif" onmouseover="F_loadRollover(this,'Math_NRp2_1.gif',0)" alt="Math" title="Math" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/algorithms.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton9','',0);F_roll('NavigationButton9',1)" onmouseout="F_roll('NavigationButton9',0)"><img id="NavigationButton9" name="NavigationButton9" src="Intersections%20of%20a%20Set%20of%20Segments_files/Algorithms_Np1_1.gif" onmouseover="F_loadRollover(this,'Algorithms_NRp2_1.gif',0)" alt="Algorithms" title="Algorithms" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/code.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton10','',0);F_roll('NavigationButton10',1)" onmouseout="F_roll('NavigationButton10',0)"><img id="NavigationButton10" name="NavigationButton10" src="Intersections%20of%20a%20Set%20of%20Segments_files/Code_Np1_1.gif" onmouseover="F_loadRollover(this,'Code_NRp2_1.gif',0)" alt="Code" title="Code" height="24" width="130" border="0"></a></td>
+                  <td width="130"><a href="http://geomalgorithms.com/book_store.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton11','',0);F_roll('NavigationButton11',1)" onmouseout="F_roll('NavigationButton11',0)"><img id="NavigationButton11" name="NavigationButton11" src="Intersections%20of%20a%20Set%20of%20Segments_files/Book-Store_Np1_1.gif" onmouseover="F_loadRollover(this,'Book-Store_NRp2_1.gif',0)" alt="Book Store" title="Book Store" height="24" width="130" border="0"></a></td>
+                  <td height="24" width="130"><a href="http://geomalgorithms.com/websites.html" class="nof-navButtonAnchor" onmouseover="F_loadRollover('NavigationButton12','',0);F_roll('NavigationButton12',1)" onmouseout="F_roll('NavigationButton12',0)"><img id="NavigationButton12" name="NavigationButton12" src="Intersections%20of%20a%20Set%20of%20Segments_files/WebSites_Np1_1.gif" onmouseover="F_loadRollover(this,'WebSites_NRp2_1.gif',0)" alt="WebSites" title="WebSites" height="24" width="130" border="0"></a></td>
+                </tr>
+              </tbody></table>
+            </td>
+            <td></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="10"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="6" height="23"></td>
+            <td colspan="9" id="Text1894" class="TextObject" width="739">
+              <p style="margin-bottom: 0px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1703170776573172";
+/* Top Margin Thin Banner */
+google_ad_slot = "9901950316";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/show_ads.js">
+</script><ins id="aswift_3_expand" style="display:inline-table;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;" frameborder="0" height="15" width="728"></iframe></ins></ins>&nbsp;</p>
+            </td>
+            <td colspan="2"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="4"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="5" height="3"></td>
+            <td colspan="6" valign="top" width="490" align="left"><img id="SiteStyleLine3" src="Intersections%20of%20a%20Set%20of%20Segments_files/line.gif" height="3" width="490" border="0"></td>
+            <td colspan="6"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="17" height="7"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="8"></td>
+            <td colspan="4" id="Text297" class="TextObject" width="385">
+              <p style="text-align: center; margin-bottom: 0px;"><span style="font-size: 10pt;">© Copyright 2012 Dan Sunday, 2001 softSurfer</span></p>
+            </td>
+            <td colspan="5"></td>
+          </tr>
+        </tbody></table>
+      </td>
+      <td>
+        <table width="314" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr valign="top" align="left">
+            <td height="251" width="13"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="13" border="0"></td>
+            <td id="Text1898" class="TextObject" width="300">
+              <p style="margin-bottom: 0px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1703170776573172";
+/* Medium Panel */
+google_ad_slot = "1357337117";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/show_ads.js">
+</script><ins id="aswift_4_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_4_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;" frameborder="0" height="250" width="300"></iframe></ins></ins>&nbsp;</p>
+            </td>
+            <td width="1"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/clearpixel.gif" alt="" height="1" width="1" border="0"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td colspan="3" height="8"></td>
+          </tr>
+          <tr valign="top" align="left">
+            <td height="607"></td>
+            <td colspan="2" id="Text1890" class="TextObject" width="301">
+              <p style="margin-bottom: 0px;"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1703170776573172";
+/* Large Margin Tower */
+google_ad_slot = "5927137515";
+google_ad_width = 300;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="Intersections%20of%20a%20Set%20of%20Segments_files/show_ads.js">
+</script><ins id="aswift_5_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_5_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_5" name="aswift_5" style="left:0;position:absolute;top:0;" frameborder="0" height="600" width="300"></iframe></ins></ins>&nbsp;</p>
+            </td>
+          </tr>
+        </tbody></table>
+      </td>
+    </tr>
+  </tbody></table>
+  <script type="text/javascript">
+  var C_MENU_BORDER = 0;
+  var C_MENU_SPACING = 1;
+  var C_MENU_BGCOLOR = "";
+  var C_MENU_AUTO_CLOSE = true;
+  new NOF_Menu(
+  new NOF_Main_Menu(new NOF_Menu_Item('NavigationBar1_1', 'vertical', 'slideBottom', 0, 24, 
+ new NOF_Menu_Button('./what_are_they-.html','./What-are-They-_Np1.gif','./What-are-They-_NRp2.gif'),new NOF_Menu_Button('./what_applications-.html','./What-Applications-_Np1.gif','./What-Applications-_NRp2.gif'),new NOF_Menu_Button('./what_problems_solved-.html','./What-Problems-Solved-_Np1.gif','./What-Problems-Solved-_NRp2.gif'),new NOF_Menu_Button('./what_is_good-.html','./What-is-Good-_Np1.gif','./What-is-Good-_NRp2.gif'),new NOF_Menu_Button('./what_is_significant-.html','./What-are-Examples-_Np1.gif','./What-are-Examples-_NRp2.gif')))
+  , new NOF_Main_Menu(new NOF_Menu_Item('NavigationBar1_2', 'vertical', 'slideBottom', 0, 24, 
+ new NOF_Menu_Button('./math.html','./Basic-Linear-Algeba_Np1.gif','./Basic-Linear-Algeba_NRp2.gif'),new NOF_Menu_Button('./math.html#Coordinate-Systems','./Coordinate-Systems_Np1.gif','./Coordinate-Systems_NRp2.gif'),new NOF_Menu_Button('./points_and_vectors.html','./Points-and-Vectors_Np1.gif','./Points-and-Vectors_NRp2.gif'),new NOF_Menu_Button('./vector_products.html','./Vector-Products_Np1.gif','./Vector-Products_NRp2.gif'),new NOF_Menu_Button('./summary_sheet.html','./Summary-Sheet_Np1.gif','./Summary-Sheet_NRp2.gif')))
+  , new NOF_Main_Menu(new NOF_Menu_Item('NavigationBar1_3', 'vertical', 'slideBottom', 0, 24, 
+ new NOF_Menu_Button('./algorithms.html','./Table-of-Contents_Np1.gif','./Table-of-Contents_NRp2.gif'),new NOF_Menu_Button('./a01-_area.html','./A01--Area_Np1.gif','./A01--Area_NRp2.gif'),new NOF_Menu_Button('./a02-_lines.html','./A02--Lines_Np1.gif','./A02--Lines_NRp2.gif'),new NOF_Menu_Button('./a03-_inclusion.html','./A03--Inclusion_Np1.gif','./A03--Inclusion_NRp2.gif'),new NOF_Menu_Button('./a04-_planes.html','./A04--Planes_Np1.gif','./A04--Planes_NRp2.gif'),new NOF_Menu_Button('./a05-_intersect-1.html','./A05--Intersect-1_Np1.gif','./A05--Intersect-1_NRp2.gif'),new NOF_Menu_Button('./a06-_intersect-2.html','./A06--Intersect-2_Np1.gif','./A06--Intersect-2_NRp2.gif'),new NOF_Menu_Button('./a07-_distance.html','./A07--Distance_Np1.gif','./A07--Distance_NRp2.gif'),new NOF_Menu_Button('./a08-_containers.html','./A08--Containers_Np1.gif','./A08--Containers_NRp2.gif'),new NOF_Menu_Button('./a09-_intersect-3.html','./A09--Intersect-3_Np1.gif','./A09--Intersect-3_NRp2.gif',
+ new NOF_Menu_Item('NavigationBar1_6', 'vertical', 'right', 130, 0, new NOF_Menu_Button('./a09-_avl_code.html','./A09--AVL-Code_Np1.gif','./A09--AVL-Code_NRp2.gif'))
+ ),new NOF_Menu_Button('./a10-_hull-1.html','./A10--Hull-1_Np1.gif','./A10--Hull-1_NRp2.gif'),new NOF_Menu_Button('./a11-_hull-2.html','./A11--Hull-2_Np1.gif','./A11--Hull-2_NRp2.gif'),new NOF_Menu_Button('./a12-_hull-3.html','./A12--Hull-3_Np1.gif','./A12--Hull-3_NRp2.gif'),new NOF_Menu_Button('./a13-_intersect-4.html','./A13--Intersect-4_Np1.gif','./A13--Intersect-4_NRp2.gif'),new NOF_Menu_Button('./a14-_extreme_pts.html','./A14--Extreme-Pts_Np1.gif','./A14--Extreme-Pts_NRp2.gif'),new NOF_Menu_Button('./a15-_tangents.html','./A15--Tangents_Np1.gif','./A15--Tangents_NRp2.gif'),new NOF_Menu_Button('./a16-_decimate-1.html','./A16--Decimate-1_Np1.gif','./A16--Decimate-1_NRp2.gif')))
+  , new NOF_Main_Menu(new NOF_Menu_Item('NavigationBar1_4', 'vertical', 'slideBottom', 0, 24, 
+ new NOF_Menu_Button('./code.html#Core-Classes','./Core-Classes_Np1.gif','./Core-Classes_NRp2.gif'),new NOF_Menu_Button('./code.html#Primitive-Functions','./Primitive-Functions_Np1.gif','./Primitive-Functions_NRp2.gif'),new NOF_Menu_Button('./code.html#Application-Routines','./Application-Routines_Np1.gif','./Application-Routines_NRp2.gif')))
+  , new NOF_Main_Menu(new NOF_Menu_Item('NavigationBar1_5', 'vertical', 'slideBottom', 0, 24, 
+ new NOF_Menu_Button('./journals.html','./Journals_Np1.gif','./Journals_NRp2.gif'),new NOF_Menu_Button('./websites.html','./WebSites_Np1_1.gif','./WebSites_NRp2_1.gif')))
+  );
+  </script><div id="NavigationBar1_1LYR" isautoclose="true" style="z-index: 5; visibility: hidden;" onmouseover="NOF_KeepOpen('NavigationBar1_1LYR', null)" onmouseout="NOF_KeepClose()"><table width="10" bgcolor="" border="0" cellpadding="0" cellspacing="1"><tbody><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/what_are_they-.html" onmouseover="F_roll('NavigationBar1_1s0' ,1, 'NavigationBar1_1', '1')" onmouseout="F_roll('NavigationBar1_1s0' ,2, 'NavigationBar1_1', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/What-are-They-_Np1.gif" id="NavigationBar1_1s0" name="NavigationBar1_1s0" onload="F_loadRollover(this,'./What-are-They-_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/what_applications-.html" onmouseover="F_roll('NavigationBar1_1s1' ,1, 'NavigationBar1_1', '1')" onmouseout="F_roll('NavigationBar1_1s1' ,2, 'NavigationBar1_1', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/What-Applications-_Np1.gif" id="NavigationBar1_1s1" name="NavigationBar1_1s1" onload="F_loadRollover(this,'./What-Applications-_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/what_problems_solved-.html" onmouseover="F_roll('NavigationBar1_1s2' ,1, 'NavigationBar1_1', '1')" onmouseout="F_roll('NavigationBar1_1s2' ,2, 'NavigationBar1_1', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/What-Problems-Solved-_Np1.gif" id="NavigationBar1_1s2" name="NavigationBar1_1s2" onload="F_loadRollover(this,'./What-Problems-Solved-_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/what_is_good-.html" onmouseover="F_roll('NavigationBar1_1s3' ,1, 'NavigationBar1_1', '1')" onmouseout="F_roll('NavigationBar1_1s3' ,2, 'NavigationBar1_1', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/What-is-Good-_Np1.gif" id="NavigationBar1_1s3" name="NavigationBar1_1s3" onload="F_loadRollover(this,'./What-is-Good-_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/what_is_significant-.html" onmouseover="F_roll('NavigationBar1_1s4' ,1, 'NavigationBar1_1', '1')" onmouseout="F_roll('NavigationBar1_1s4' ,2, 'NavigationBar1_1', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/What-are-Examples-_Np1.gif" id="NavigationBar1_1s4" name="NavigationBar1_1s4" onload="F_loadRollover(this,'./What-are-Examples-_NRp2.gif',0)" border="0"></a></td></tr></tbody></table></div>
+<div id="NavigationBar1_2LYR" isautoclose="true" style="z-index:5; filter:blendTrans(duration=0.5)" onmouseover="NOF_KeepOpen('NavigationBar1_2LYR', null)" onmouseout="NOF_KeepClose()"><table width="10" bgcolor="" border="0" cellpadding="0" cellspacing="1"><tbody><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/math.html" onmouseover="F_roll('NavigationBar1_2s0' ,1, 'NavigationBar1_2', '1')" onmouseout="F_roll('NavigationBar1_2s0' ,2, 'NavigationBar1_2', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Basic-Linear-Algeba_Np1.gif" id="NavigationBar1_2s0" name="NavigationBar1_2s0" onload="F_loadRollover(this,'./Basic-Linear-Algeba_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/math.html#Coordinate-Systems" onmouseover="F_roll('NavigationBar1_2s1' ,1, 'NavigationBar1_2', '1')" onmouseout="F_roll('NavigationBar1_2s1' ,2, 'NavigationBar1_2', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Coordinate-Systems_Np1.gif" id="NavigationBar1_2s1" name="NavigationBar1_2s1" onload="F_loadRollover(this,'./Coordinate-Systems_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/points_and_vectors.html" onmouseover="F_roll('NavigationBar1_2s2' ,1, 'NavigationBar1_2', '1')" onmouseout="F_roll('NavigationBar1_2s2' ,2, 'NavigationBar1_2', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Points-and-Vectors_Np1.gif" id="NavigationBar1_2s2" name="NavigationBar1_2s2" onload="F_loadRollover(this,'./Points-and-Vectors_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/vector_products.html" onmouseover="F_roll('NavigationBar1_2s3' ,1, 'NavigationBar1_2', '1')" onmouseout="F_roll('NavigationBar1_2s3' ,2, 'NavigationBar1_2', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Vector-Products_Np1.gif" id="NavigationBar1_2s3" name="NavigationBar1_2s3" onload="F_loadRollover(this,'./Vector-Products_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/summary_sheet.html" onmouseover="F_roll('NavigationBar1_2s4' ,1, 'NavigationBar1_2', '1')" onmouseout="F_roll('NavigationBar1_2s4' ,2, 'NavigationBar1_2', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Summary-Sheet_Np1.gif" id="NavigationBar1_2s4" name="NavigationBar1_2s4" onload="F_loadRollover(this,'./Summary-Sheet_NRp2.gif',0)" border="0"></a></td></tr></tbody></table></div>
+<div id="NavigationBar1_3LYR" isautoclose="true" style="z-index:5; filter:blendTrans(duration=0.5)" onmouseover="NOF_KeepOpen('NavigationBar1_3LYR', null)" onmouseout="NOF_KeepClose()"><table width="10" bgcolor="" border="0" cellpadding="0" cellspacing="1"><tbody><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/algorithms.html" onmouseover="F_roll('NavigationBar1_3s0' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s0' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Table-of-Contents_Np1.gif" id="NavigationBar1_3s0" name="NavigationBar1_3s0" onload="F_loadRollover(this,'./Table-of-Contents_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a01-_area.html" onmouseover="F_roll('NavigationBar1_3s1' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s1' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A01--Area_Np1.gif" id="NavigationBar1_3s1" name="NavigationBar1_3s1" onload="F_loadRollover(this,'./A01--Area_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a02-_lines.html" onmouseover="F_roll('NavigationBar1_3s2' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s2' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A02--Lines_Np1.gif" id="NavigationBar1_3s2" name="NavigationBar1_3s2" onload="F_loadRollover(this,'./A02--Lines_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a03-_inclusion.html" onmouseover="F_roll('NavigationBar1_3s3' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s3' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A03--Inclusion_Np1.gif" id="NavigationBar1_3s3" name="NavigationBar1_3s3" onload="F_loadRollover(this,'./A03--Inclusion_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a04-_planes.html" onmouseover="F_roll('NavigationBar1_3s4' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s4' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A04--Planes_Np1.gif" id="NavigationBar1_3s4" name="NavigationBar1_3s4" onload="F_loadRollover(this,'./A04--Planes_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a05-_intersect-1.html" onmouseover="F_roll('NavigationBar1_3s5' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s5' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A05--Intersect-1_Np1.gif" id="NavigationBar1_3s5" name="NavigationBar1_3s5" onload="F_loadRollover(this,'./A05--Intersect-1_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a06-_intersect-2.html" onmouseover="F_roll('NavigationBar1_3s6' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s6' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A06--Intersect-2_Np1.gif" id="NavigationBar1_3s6" name="NavigationBar1_3s6" onload="F_loadRollover(this,'./A06--Intersect-2_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a07-_distance.html" onmouseover="F_roll('NavigationBar1_3s7' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s7' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A07--Distance_Np1.gif" id="NavigationBar1_3s7" name="NavigationBar1_3s7" onload="F_loadRollover(this,'./A07--Distance_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a08-_containers.html" onmouseover="F_roll('NavigationBar1_3s8' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s8' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A08--Containers_Np1.gif" id="NavigationBar1_3s8" name="NavigationBar1_3s8" onload="F_loadRollover(this,'./A08--Containers_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a09-_intersect-3.html" onmouseover="F_roll('NavigationBar1_3s9' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s9' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A09--Intersect-3_Np1.gif" id="NavigationBar1_3s9" name="NavigationBar1_3s9" onload="F_loadRollover(this,'./A09--Intersect-3_NRp2.gif', new Array('NavigationBar1_6','vertical' , 'right', 130,0))" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a10-_hull-1.html" onmouseover="F_roll('NavigationBar1_3s10' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s10' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A10--Hull-1_Np1.gif" id="NavigationBar1_3s10" name="NavigationBar1_3s10" onload="F_loadRollover(this,'./A10--Hull-1_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a11-_hull-2.html" onmouseover="F_roll('NavigationBar1_3s11' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s11' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A11--Hull-2_Np1.gif" id="NavigationBar1_3s11" name="NavigationBar1_3s11" onload="F_loadRollover(this,'./A11--Hull-2_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a12-_hull-3.html" onmouseover="F_roll('NavigationBar1_3s12' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s12' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A12--Hull-3_Np1.gif" id="NavigationBar1_3s12" name="NavigationBar1_3s12" onload="F_loadRollover(this,'./A12--Hull-3_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a13-_intersect-4.html" onmouseover="F_roll('NavigationBar1_3s13' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s13' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A13--Intersect-4_Np1.gif" id="NavigationBar1_3s13" name="NavigationBar1_3s13" onload="F_loadRollover(this,'./A13--Intersect-4_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a14-_extreme_pts.html" onmouseover="F_roll('NavigationBar1_3s14' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s14' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A14--Extreme-Pts_Np1.gif" id="NavigationBar1_3s14" name="NavigationBar1_3s14" onload="F_loadRollover(this,'./A14--Extreme-Pts_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a15-_tangents.html" onmouseover="F_roll('NavigationBar1_3s15' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s15' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A15--Tangents_Np1.gif" id="NavigationBar1_3s15" name="NavigationBar1_3s15" onload="F_loadRollover(this,'./A15--Tangents_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a16-_decimate-1.html" onmouseover="F_roll('NavigationBar1_3s16' ,1, 'NavigationBar1_3', '1')" onmouseout="F_roll('NavigationBar1_3s16' ,2, 'NavigationBar1_3', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A16--Decimate-1_Np1.gif" id="NavigationBar1_3s16" name="NavigationBar1_3s16" onload="F_loadRollover(this,'./A16--Decimate-1_NRp2.gif',0)" border="0"></a></td></tr></tbody></table></div>
+<div id="NavigationBar1_6LYR" isautoclose="true" style="z-index:5; filter:blendTrans(duration=0.5)" onmouseover="NOF_KeepOpen('NavigationBar1_6LYR', NavigationBar1_3LYR)" onmouseout="NOF_KeepClose()"><table width="10" bgcolor="" border="0" cellpadding="0" cellspacing="1"><tbody><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/a09-_avl_code.html" onmouseover="F_roll('NavigationBar1_6s0' ,1, 'NavigationBar1_6', '1')" onmouseout="F_roll('NavigationBar1_6s0' ,2, 'NavigationBar1_6', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/A09--AVL-Code_Np1.gif" id="NavigationBar1_6s0" name="NavigationBar1_6s0" onload="F_loadRollover(this,'./A09--AVL-Code_NRp2.gif',0)" border="0"></a></td></tr></tbody></table></div>
+<div id="NavigationBar1_4LYR" isautoclose="true" style="z-index:5; filter:blendTrans(duration=0.5)" onmouseover="NOF_KeepOpen('NavigationBar1_4LYR', null)" onmouseout="NOF_KeepClose()"><table width="10" bgcolor="" border="0" cellpadding="0" cellspacing="1"><tbody><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/code.html#Core-Classes" onmouseover="F_roll('NavigationBar1_4s0' ,1, 'NavigationBar1_4', '1')" onmouseout="F_roll('NavigationBar1_4s0' ,2, 'NavigationBar1_4', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Core-Classes_Np1.gif" id="NavigationBar1_4s0" name="NavigationBar1_4s0" onload="F_loadRollover(this,'./Core-Classes_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/code.html#Primitive-Functions" onmouseover="F_roll('NavigationBar1_4s1' ,1, 'NavigationBar1_4', '1')" onmouseout="F_roll('NavigationBar1_4s1' ,2, 'NavigationBar1_4', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Primitive-Functions_Np1.gif" id="NavigationBar1_4s1" name="NavigationBar1_4s1" onload="F_loadRollover(this,'./Primitive-Functions_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/code.html#Application-Routines" onmouseover="F_roll('NavigationBar1_4s2' ,1, 'NavigationBar1_4', '1')" onmouseout="F_roll('NavigationBar1_4s2' ,2, 'NavigationBar1_4', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Application-Routines_Np1.gif" id="NavigationBar1_4s2" name="NavigationBar1_4s2" onload="F_loadRollover(this,'./Application-Routines_NRp2.gif',0)" border="0"></a></td></tr></tbody></table></div>
+<div id="NavigationBar1_5LYR" isautoclose="true" style="z-index:5; filter:blendTrans(duration=0.5)" onmouseover="NOF_KeepOpen('NavigationBar1_5LYR', null)" onmouseout="NOF_KeepClose()"><table width="10" bgcolor="" border="0" cellpadding="0" cellspacing="1"><tbody><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/journals.html" onmouseover="F_roll('NavigationBar1_5s0' ,1, 'NavigationBar1_5', '1')" onmouseout="F_roll('NavigationBar1_5s0' ,2, 'NavigationBar1_5', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/Journals_Np1.gif" id="NavigationBar1_5s0" name="NavigationBar1_5s0" onload="F_loadRollover(this,'./Journals_NRp2.gif',0)" border="0"></a></td></tr><tr><td><a style="display: block;" class="nof-navPositioning" href="http://geomalgorithms.com/websites.html" onmouseover="F_roll('NavigationBar1_5s1' ,1, 'NavigationBar1_5', '1')" onmouseout="F_roll('NavigationBar1_5s1' ,2, 'NavigationBar1_5', '1')"><img src="Intersections%20of%20a%20Set%20of%20Segments_files/WebSites_Np1_1.gif" id="NavigationBar1_5s1" name="NavigationBar1_5s1" onload="F_loadRollover(this,'./WebSites_NRp2_1.gif',0)" border="0"></a></td></tr></tbody></table></div>
+
+  <!-- Analytics Code Start -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="Intersections%20of%20a%20Set%20of%20Segments_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-36434615-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+<!-- Analytics Code End -->
+
+
+ </body></html>
